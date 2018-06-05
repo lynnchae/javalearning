@@ -1,4 +1,5 @@
 # Java Learning
-java learngin
 
 `1 factory desgin`
+
+`2 singleton desgin`
