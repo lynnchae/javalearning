@@ -1,4 +1,4 @@
-package org.lynn.designPattern.mybatic.plugin;
+package org.lynn.mybatis.plugin;
 
 import java.lang.reflect.Method;
 
