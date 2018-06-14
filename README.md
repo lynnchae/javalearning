@@ -1,13 +1,27 @@
 # Java Learning
 
-`1 factory desgin`
+## JAVA学习过程中的一些简单代码，见笑了
 
-`2 singleton desgin`
+#### Design Pattern 
 
-`3 decorator`
+* `factory desgin`
 
-`4 adapter`
+* `singleton desgin`
 
-`5 proxy`
+* `decorator`
 
-`6 plugin chain simple impl`
+* `adapter`
+
+* `proxy`
+
+* `strategy`
+
+##### Framework
+
++ `plugin chain simple implement`
+
+    >  根据mybatis简单实现的一个pluginChain
+ 
+    >  简陋版，会针对所有的方法进行拦截
+
++ `待续`
