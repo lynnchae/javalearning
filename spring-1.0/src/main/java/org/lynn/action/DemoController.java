@@ -7,8 +7,7 @@ import org.lynn.annotation.RequestParam;
 import org.lynn.service.DemoService;
 
 /**
- * Copyright @ 2013QIANLONG.
- * All right reserved.
+
  * Class Name : org.lynn
  * Description :
  * Author : cailinfeng

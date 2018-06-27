@@ -21,8 +21,7 @@ import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * Copyright @ 2013QIANLONG.
- * All right reserved.
+
  * Class Name : org.lynn.spring
  * Description :
  * Author : cailinfeng

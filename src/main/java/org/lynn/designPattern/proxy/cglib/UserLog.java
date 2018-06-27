@@ -1,8 +1,7 @@
 package org.lynn.designPattern.proxy.cglib;
 
 /**
- * Copyright @ 2013QIANLONG.
- * All right reserved.
+
  * Class Name : org.lynn.designPattern.proxy.cglib
  * Description :
  * Author : cailinfeng

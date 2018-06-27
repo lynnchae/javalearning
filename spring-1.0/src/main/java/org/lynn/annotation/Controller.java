@@ -3,8 +3,7 @@ package org.lynn.annotation;
 import java.lang.annotation.*;
 
 /**
- * Copyright @ 2013QIANLONG.
- * All right reserved.
+
  * Class Name : org.lynn.annotation
  * Description :
  * Author : cailinfeng
