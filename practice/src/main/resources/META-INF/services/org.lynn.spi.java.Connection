@@ -1,0 +1,2 @@
+org.lynn.spi.java.MysqlConnection
+org.lynn.spi.java.OracleConnection

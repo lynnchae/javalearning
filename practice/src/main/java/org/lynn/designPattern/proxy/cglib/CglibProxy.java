@@ -9,7 +9,7 @@ import java.lang.reflect.Method;
 /**
  * Class Name : org.lynn.designPattern.proxy.cglib
  * Description :
- * Author : cailinfeng
+ * @author : cailinfeng
  * Date : 2018/6/8 14:56
  */
 public class CglibProxy implements MethodInterceptor {

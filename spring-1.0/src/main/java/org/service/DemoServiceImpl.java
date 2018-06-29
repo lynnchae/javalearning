@@ -6,7 +6,7 @@ import org.lynn.annotation.Service;
 /**
  * Class Name : org.lynn.service
  * Description :
- * Author : cailinfeng
+ * @author : cailinfeng
  * Date : 2018/6/26 15:43
  */
 @Service

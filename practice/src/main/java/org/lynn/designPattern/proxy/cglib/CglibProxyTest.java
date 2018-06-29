@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 /**
  * Class Name : org.lynn.designPattern.proxy.cglib
  * Description :
- * Author : cailinfeng
+ * @author : cailinfeng
  * Date : 2018/6/8 15:04
  */
 public class CglibProxyTest {

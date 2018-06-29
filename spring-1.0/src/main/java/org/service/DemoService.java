@@ -3,7 +3,7 @@ package org.service;
 /**
  * Class Name : org.lynn.service
  * Description :
- * Author : cailinfeng
+ * @author : cailinfeng
  * Date : 2018/6/26 15:42
  */
 public interface DemoService {

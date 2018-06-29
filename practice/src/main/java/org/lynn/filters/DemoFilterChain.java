@@ -4,11 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Copyright @ 2013QIANLONG.
- * All right reserved.
  * Class Name : org.lynn.filters
  * Description :
- * Author : cailinfeng
+ * @author : cailinfeng
  * Date : 2018/6/27 14:37
  */
 public class DemoFilterChain {

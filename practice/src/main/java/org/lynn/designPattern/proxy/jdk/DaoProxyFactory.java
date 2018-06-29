@@ -7,7 +7,7 @@ import java.lang.reflect.Proxy;
 /**
  * Class Name : org.lynn.designPattern.proxy
  * Description : 代理类工厂
- * Author : cailinfeng
+ * @author : cailinfeng
  * Date : 2018/6/8 14:32
  */
 public class DaoProxyFactory {

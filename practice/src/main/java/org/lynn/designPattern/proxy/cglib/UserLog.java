@@ -4,7 +4,7 @@ package org.lynn.designPattern.proxy.cglib;
 
  * Class Name : org.lynn.designPattern.proxy.cglib
  * Description :
- * Author : cailinfeng
+ * @author : cailinfeng
  * Date : 2018/6/8 15:03
  */
 public class UserLog {
