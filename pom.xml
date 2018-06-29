@@ -10,6 +10,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>spring-1.0</module>
+        <module>practice</module>
     </modules>
     <dependencies>
         <dependency>

@@ -1,4 +1,4 @@
-package org.lynn.annotation;
+package org.annotation;
 
 import java.lang.annotation.*;
 
@@ -12,7 +12,7 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface Controller {
+public @interface Service {
 
     String value() default  "";
 

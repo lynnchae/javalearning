@@ -1,4 +1,4 @@
-package org.lynn.service;
+package org.service;
 
 /**
  * Class Name : org.lynn.service
