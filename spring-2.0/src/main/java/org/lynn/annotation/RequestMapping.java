@@ -1,4 +1,4 @@
-package org.annotation;
+package org.lynn.annotation;
 
 import java.lang.annotation.*;
 
@@ -9,10 +9,10 @@ import java.lang.annotation.*;
  * @author : cailinfeng
  * Date : 2018/6/26 16:07
  */
-@Target(ElementType.TYPE)
+@Target({ElementType.METHOD,ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface Controller {
+public @interface RequestMapping {
 
     String value() default  "";
 

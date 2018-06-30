@@ -1,4 +1,4 @@
-package org.annotation;
+package org.lynn.annotation;
 
 import java.lang.annotation.*;
 

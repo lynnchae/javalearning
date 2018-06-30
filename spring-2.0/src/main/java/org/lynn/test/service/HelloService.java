@@ -1,4 +1,4 @@
-package org.service;
+package org.lynn.test.service;
 
 /**
  * Class Name : org.lynn.service
@@ -6,7 +6,7 @@ package org.service;
  * @author : cailinfeng
  * Date : 2018/6/26 15:42
  */
-public interface DemoService {
+public interface HelloService {
 
     public void sayHello(String name);
 

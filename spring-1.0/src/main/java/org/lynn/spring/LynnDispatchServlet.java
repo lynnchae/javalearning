@@ -1,8 +1,5 @@
-package org.spring;
+package org.lynn.spring;
 
-import org.annotation.AutoWired;
-import org.annotation.Controller;
-import org.annotation.Service;
 import org.lynn.annotation.AutoWired;
 import org.lynn.annotation.Controller;
 import org.lynn.annotation.Service;

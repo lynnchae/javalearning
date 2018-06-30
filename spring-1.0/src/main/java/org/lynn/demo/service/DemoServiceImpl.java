@@ -1,6 +1,5 @@
-package org.service;
+package org.lynn.demo.service;
 
-import org.annotation.Service;
 import org.lynn.annotation.Service;
 
 /**

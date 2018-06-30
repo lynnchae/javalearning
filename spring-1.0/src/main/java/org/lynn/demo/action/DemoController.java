@@ -1,12 +1,10 @@
-package org.action;
+package org.lynn.demo.action;
 
-import org.annotation.AutoWired;
-import org.annotation.Controller;
 import org.lynn.annotation.AutoWired;
 import org.lynn.annotation.Controller;
 import org.lynn.annotation.RequestMapping;
 import org.lynn.annotation.RequestParam;
-import org.lynn.service.DemoService;
+import org.lynn.demo.service.DemoService;
 
 /**
 
