@@ -115,7 +115,7 @@ public class DispatcherServlet extends HttpServlet {
                 Object proxy = context.getBean(beanName);
                 Object controller = AopProxyUtils.getTargetObject(proxy);
                 Class<?> clazz = controller.getClass();
-                //但是不是所有的牛奶都叫特仑苏
+                //仅针对Controller进行处理为handler
                 if (!clazz.isAnnotationPresent(Controller.class)) {
                     continue;
                 }
