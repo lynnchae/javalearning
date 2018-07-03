@@ -77,5 +77,6 @@
     5.  最后 BeanPostProcessor -> postProcessAfterInitialization
     
     
-   >> init-method和afterPropertiesSet可以针对某个单独的bean进行处理
-      BeanPostProcessor可以针对容器中所有的bean进行处理
+                
+        init-method和afterPropertiesSet可以针对某个单独的bean进行处理，
+        BeanPostProcessor可以针对容器中所有的bean进行处理
