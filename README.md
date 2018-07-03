@@ -48,21 +48,30 @@
     >  实现handlerAdapter,HandlerMapping,Aop,DispatchServlet...
     
     >  可以通过url进行访问
-    
+       
 +  `aop拦截`
       
-      > 
-        protected Object invokeJoinpoint() throws Throwable {
-            return AopUtils.invokeJoinpointUsingReflection(this.target, this.method, this.arguments);
-        }
-      > 
+      
+  ```Java
+    protected Object invokeJoinpoint() throws Throwable {
+        return AopUtils.invokeJoinpointUsingReflection(this.target, this.method, this.arguments);
+    }
+  ```
+  > 
         aop对Service类中的a() b()方法均配置的拦截，当a()内部调用b()，无法做到对b的拦截
         invokeJoinpoint()中传递的对象为目标对象，而不是被aop代理过的对象，即this.target
         调用b()方法时，并没有过代理对象来执行，所以无法拦截。如果需要在a()方法中调用b()方法，并且对b()进行拦截，
         则需要获取到Service类的代理对象来进行调用，((Service)AopContext.currentProxy()) -> b()
         
-      >
+  >
         <aop:config expose-proxy="true" proxy-target-class="false"></aop:config>
         需要配置此项，暴露代理对象，实现线程内共享，使用ThreadLocal模式
         
         
++ `init-method，afterPropertiesSet和BeanPostProcessor`
+
+    1.  先执行类的构造器，进行实例化
+    2.  接着执行 BeanPostProcessor -> postProcessBeforeInitialization
+    3.  然后到InitializingBean -> afterPropertiesSet
+    4.  再到配置的init-method 方法
+    5.  最后 BeanPostProcessor -> postProcessAfterInitialization
