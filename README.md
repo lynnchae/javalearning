@@ -80,3 +80,8 @@
                 
         init-method和afterPropertiesSet可以针对某个单独的bean进行处理，
         BeanPostProcessor可以针对容器中所有的bean进行处理
+        
+        如果一个Bbean是lazy-init，而另一个none lazy-init的singleton Abean依赖于它，
+        那么当ApplicationContext实例化singleton Abean时，
+        必须确保上述singleton Abean所依赖所有bean也被预先初始化，包括设置为lazy-init的Bbean,
+        这种情况也符合延时加载的bean在第一次调用时才被实例化的规则。
