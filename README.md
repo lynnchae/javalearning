@@ -30,6 +30,16 @@
     + JDK动态代理，创建一个com.sun.proxy.$Proxy0类，继承Proxy，动态实现interfaces接口，通过父类Proxy构造器
       Constructor(InvocationHandler h)，实例化一个interfaces类型的对象，最后通过h.invoke反射调用对应的方法。
 
+---
+
+|代理方式 | 实现|优点|缺点|特点|
+|:-:|:-|:-|:-|:-|:-|
+|JDK动态代理|代理类与委托类实现同一接口，主要是通过代理类实现InvocationHandler，并重写invoke方法来进行动态代理的，在invoke方法中将对方法进行增强处理|不需要硬编码接口，代码复用率高|只能够代理实现了接口的委托类|底层使用反射机制进行方法的调用|
+|CGLIB动态代理|代理类将委托类作为自己的父类并为其中的非final委托方法创建两个方法， 一个是与委托方法签名相同的方法，它在方法中会通过super调用委托方法；另一个是代理类独有的方法。在代理方法中，它会判断是否存在实现了MethodInterceptor接口的对象，若存在则将调用intercept方法对委托方法进行代理|可以在运行时对类或者是接口进行增强操作，且委托类无需实现接口|不能对final类以及final方法进行代理|底层将方法全部存入一个数组中，通过数组索引直接进行方法调用|
+
+---
+
+
 * `strategy`
 
 ##### Framework
@@ -95,3 +105,5 @@
         那么当ApplicationContext实例化singleton Abean时，
         必须确保上述singleton Abean所依赖所有bean也被预先初始化，包括设置为lazy-init的Bbean,
         这种情况也符合延时加载的bean在第一次调用时才被实例化的规则。
+        
+        
