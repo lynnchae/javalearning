@@ -20,6 +20,16 @@
 
 * `proxy`
 
+    > 
+        
+    ```java
+    public static Object newProxyInstance(ClassLoader loader,
+                      Class<?>[] interfaces,
+                          InvocationHandler h)
+    ```
+    + JDK动态代理，创建一个com.sun.proxy.$Proxy0类，继承Proxy，动态实现interfaces接口，通过父类Proxy构造器
+      Constructor(InvocationHandler h)，实例化一个interfaces类型的对象，最后通过h.invoke反射调用对应的方法。
+
 * `strategy`
 
 ##### Framework
