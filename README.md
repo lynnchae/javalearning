@@ -87,6 +87,13 @@
         <aop:config expose-proxy="true" proxy-target-class="false"></aop:config>
         需要配置此项，暴露代理对象，实现线程内共享，使用ThreadLocal模式
         
+  >
+        AbstractAutoProxyCreator实现了BeanPostProcessor接口，spring容器初始化bean后，调用postProcessAfterInitialization
+        对bean进行wrapIfNecessary，创建一个aop的proxy对象。
+        ProxyFactory -> aopProxy -> getProxy
+                                    <- JDKDynamicAopProxy
+                                    <- CglibAopProxy
+        ProxyFactory保存了aop拦截的配置信息                    
         
 + `init-method，afterPropertiesSet和BeanPostProcessor`
 
