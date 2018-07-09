@@ -1,31 +1,29 @@
 # Java Learning
 
-### Design Pattern 
-
 ---
 
-#### factory desgin
+### 1. Design Pattern 
 
----
 
-#### singleton desgin
+#### 1.1 factory desgin
 
----
 
-#### decorator
+#### 1.2 singleton desgin
 
----
 
-#### adapter
+#### 1.3 decorator
+
+
+#### 1.4 adapter
  >  装饰器与适配器模式都有一个别名叫包装模式(Wrapper)，它们的作用看似都是起到包装一个类或对象的作用，
     但是使用它们的目的不一样。
     适配器模式的意义是将一个接口转变成另一个接口，通过改变接口达到重复使用的目的；
     而装饰器模式不是要改变被装饰对象的接口，而恰恰要保持原有的接口，但增强原有对象的功能，
     或者改变原有对象的处理方法而提高性能。
  
----
 
-#### proxy
+
+#### 1.5 proxy
         
 ```java
 public static Object newProxyInstance(ClassLoader loader,
@@ -35,6 +33,7 @@ public static Object newProxyInstance(ClassLoader loader,
  > JDK动态代理，创建一个com.sun.proxy.$Proxy0类，继承Proxy，动态实现interfaces接口，通过父类Proxy构造器
    Constructor(InvocationHandler h)，实例化一个interfaces类型的对象，最后通过h.invoke反射调用对应的方法。
 
+---
 
 |代理方式|实现|优点|缺点|特点
 |:-----|:-----|:-----|:-----|:-----|
@@ -43,36 +42,36 @@ public static Object newProxyInstance(ClassLoader loader,
 
 ---
 
-#### strategy
+#### 1.6 strategy
 
 ---
 
-### Framework
+### 2. Framework
 
-#### plugin chain simple implement
+#### 2.1 plugin chain simple implement
 
 >  根据mybatis简单实现的一个pluginChain
 
 >  简陋版，会针对所有的方法进行拦截
 
----
 
-#### spring mvc 1.0
+
+#### 2.2 spring mvc 1.0
 
 >  简单实现springMVC定位、加载、注册过程
 
----
 
-#### filters
+
+#### 2.3 filters
 
 >  通过匿名内部类创建FilterChain，并对匿名内部类有个深入的理解
     
 >  外部类方法中传入匿名内部类的变量，匿名内部类实际上持有了该变量的一个拷贝，如果对此拷贝进行改变，
    不会反应到方法中，而对于开发者而言，看到的是同一个对象，所以不能保持同步修改，故方法中的变量需要定义为final.
       
----
+
       
-#### spring mvc 2.0
+#### 2.4 spring mvc 2.0
 
 >  实现springMVC定位、加载、注册过程
     
@@ -80,9 +79,9 @@ public static Object newProxyInstance(ClassLoader loader,
     
 >  可以通过url进行访问
   
----
+
        
-#### aop拦截
+#### 2.5 aop拦截
       
       
 ```Java
@@ -106,9 +105,9 @@ public static Object newProxyInstance(ClassLoader loader,
                                     <- CglibAopProxy
        ProxyFactory保存了aop拦截的配置信息                    
      
----
+
    
-#### init-method，afterPropertiesSet和BeanPostProcessor
+#### 2.6 init-method，afterPropertiesSet和BeanPostProcessor
 
    > 1.  先执行类的构造器，进行实例化
    > 2.  接着执行 BeanPostProcessor -> postProcessBeforeInitialization
@@ -128,7 +127,9 @@ public static Object newProxyInstance(ClassLoader loader,
       
 ---
   
-#### 先++  后++
+### 3. Concurrent
+
+#### 3.1 先++  后++
     
    +  先++：先运算，后使用
    
@@ -142,8 +143,8 @@ public static Object newProxyInstance(ClassLoader loader,
     System.out.println(names[++index]);//输出lily
 ```
 
-### Concurrent  
-#### Lock
+  
+#### 3.2 Lock
 
 + 自旋锁: 
    > 一种用于保护多线程共享资源的锁，与一般互斥锁（mutex）不同之处在于当自旋锁尝试获取锁时以忙等待（busy waiting）的形式不断地循环检查锁是否可用。
@@ -164,7 +165,7 @@ public static Object newProxyInstance(ClassLoader loader,
     如果某个线程试图获取一个已经由它自己持有的锁时，那么这个请求会立刻成功，并且会将这个锁的计数值加1，
     而当线程退出同步代码块时，计数器将会递减，当计数值等于0时，锁释放。
     
-##### JVM内置锁的膨胀
+##### 3.3 JVM内置锁的膨胀
     
    >[简书：浅谈偏向锁、轻量级锁、重量级锁](https://www.jianshu.com/p/36eedeb3f912)
     
