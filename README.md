@@ -163,3 +163,9 @@ public static Object newProxyInstance(ClassLoader loader,
     
     如果某个线程试图获取一个已经由它自己持有的锁时，那么这个请求会立刻成功，并且会将这个锁的计数值加1，
     而当线程退出同步代码块时，计数器将会递减，当计数值等于0时，锁释放。
+    
+##### JVM内置锁的膨胀
+    
+   >[简书：浅谈偏向锁、轻量级锁、重量级锁](https://www.jianshu.com/p/36eedeb3f912)
+    
+    偏向锁 -> 轻量级锁 -> 重量级锁
