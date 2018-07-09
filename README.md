@@ -1,26 +1,31 @@
 # Java Learning
 
-## JAVA学习过程中的一些简单代码
+### Design Pattern 
 
-#### Design Pattern 
+---
 
-###### factory desgin
+#### factory desgin
 
-###### singleton desgin
+---
 
-###### decorator
+#### singleton desgin
 
-###### adapter
- >
-    装饰器与适配器模式都有一个别名叫包装模式(Wrapper)，它们的作用看似都是起到包装一个类或对象的作用，
+---
+
+#### decorator
+
+---
+
+#### adapter
+ >  装饰器与适配器模式都有一个别名叫包装模式(Wrapper)，它们的作用看似都是起到包装一个类或对象的作用，
     但是使用它们的目的不一样。
     适配器模式的意义是将一个接口转变成另一个接口，通过改变接口达到重复使用的目的；
     而装饰器模式不是要改变被装饰对象的接口，而恰恰要保持原有的接口，但增强原有对象的功能，
     或者改变原有对象的处理方法而提高性能。
-        
-###### proxy
+ 
+---
 
-   > 
+#### proxy
         
 ```java
 public static Object newProxyInstance(ClassLoader loader,
@@ -30,7 +35,6 @@ public static Object newProxyInstance(ClassLoader loader,
  > JDK动态代理，创建一个com.sun.proxy.$Proxy0类，继承Proxy，动态实现interfaces接口，通过父类Proxy构造器
    Constructor(InvocationHandler h)，实例化一个interfaces类型的对象，最后通过h.invoke反射调用对应的方法。
 
----
 
 |代理方式|实现|优点|缺点|特点
 |:-----|:-----|:-----|:-----|:-----|
@@ -39,37 +43,46 @@ public static Object newProxyInstance(ClassLoader loader,
 
 ---
 
+#### strategy
 
-###### strategy
+---
 
-##### Framework
+### Framework
 
-###### plugin chain simple implement
+#### plugin chain simple implement
 
 >  根据mybatis简单实现的一个pluginChain
 
 >  简陋版，会针对所有的方法进行拦截
 
-###### spring mvc 1.0
+---
+
+#### spring mvc 1.0
 
 >  简单实现springMVC定位、加载、注册过程
 
-###### filters
+---
+
+#### filters
 
 >  通过匿名内部类创建FilterChain，并对匿名内部类有个深入的理解
     
 >  外部类方法中传入匿名内部类的变量，匿名内部类实际上持有了该变量的一个拷贝，如果对此拷贝进行改变，
    不会反应到方法中，而对于开发者而言，看到的是同一个对象，所以不能保持同步修改，故方法中的变量需要定义为final.
       
-###### spring mvc 2.0
+---
+      
+#### spring mvc 2.0
 
 >  实现springMVC定位、加载、注册过程
     
 >  实现handlerAdapter,HandlerMapping,Aop,DispatchServlet...
     
 >  可以通过url进行访问
+  
+---
        
-###### aop拦截
+#### aop拦截
       
       
 ```Java
@@ -88,18 +101,20 @@ public static Object newProxyInstance(ClassLoader loader,
   > AbstractAutoProxyCreator实现了BeanPostProcessor接口，spring容器初始化bean后，调用postProcessAfterInitialization
     对bean进行wrapIfNecessary，创建一个aop的proxy对象。
     
-        ProxyFactory -> aopProxy -> getProxy
+       ProxyFactory -> aopProxy -> getProxy
                                     <- JDKDynamicAopProxy
                                     <- CglibAopProxy
-        ProxyFactory保存了aop拦截的配置信息                    
-        
-###### init-method，afterPropertiesSet和BeanPostProcessor
+       ProxyFactory保存了aop拦截的配置信息                    
+     
+---
+   
+#### init-method，afterPropertiesSet和BeanPostProcessor
 
-    1.  先执行类的构造器，进行实例化
-    2.  接着执行 BeanPostProcessor -> postProcessBeforeInitialization
-    3.  然后到InitializingBean -> afterPropertiesSet
-    4.  再到配置的init-method 方法
-    5.  最后 BeanPostProcessor -> postProcessAfterInitialization
+   > 1.  先执行类的构造器，进行实例化
+   > 2.  接着执行 BeanPostProcessor -> postProcessBeforeInitialization
+   > 3.  然后到InitializingBean -> afterPropertiesSet
+   > 4.  再到配置的init-method 方法
+   > 5.  最后 BeanPostProcessor -> postProcessAfterInitialization
 
 +            
     init-method和afterPropertiesSet可以针对某个单独的bean进行处理，
@@ -110,8 +125,10 @@ public static Object newProxyInstance(ClassLoader loader,
     那么当ApplicationContext实例化singleton Abean时，
     必须确保上述singleton Abean所依赖所有bean也被预先初始化，包括设置为lazy-init的Bbean,
     这种情况也符合延时加载的bean在第一次调用时才被实例化的规则。
-        
-###### 先++  后++
+      
+---
+  
+#### 先++  后++
     
    +  先++：先运算，后使用
    
@@ -123,7 +140,6 @@ public static Object newProxyInstance(ClassLoader loader,
     System.out.println(names[index ++]);//输出jack
     System.out.println(names[index]);//输出tom
     System.out.println(names[++index]);//输出lily
-    
 ```
 
         
