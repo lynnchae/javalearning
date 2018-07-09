@@ -113,4 +113,20 @@
         必须确保上述singleton Abean所依赖所有bean也被预先初始化，包括设置为lazy-init的Bbean,
         这种情况也符合延时加载的bean在第一次调用时才被实例化的规则。
         
++ `先++  后++`  
+    
+    >  先++：先运算，后使用
+    
+    >  后++：先使用，后运算
+        
+    例如： 
+```java
+        String[] names = {"jack","tom","lily"};
+        int index = 0;
+        System.out.println(names[index ++]);//输出jack
+        System.out.println(names[index]);//输出tom
+        System.out.println(names[++index]);//输出lily
+    
+```
+
         
