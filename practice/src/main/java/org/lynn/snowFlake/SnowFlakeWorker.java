@@ -24,8 +24,7 @@ public class SnowFlakeWorker {
     /**
      * 开始时间戳 (2018-01-01)
      */
-//    private final long twepoch = 1514736000000L;
-    private final long twepoch = 1288834974657L;
+    private final long twepoch = 1514736000000L;
 
     /**
      * 机器id所占的位数
