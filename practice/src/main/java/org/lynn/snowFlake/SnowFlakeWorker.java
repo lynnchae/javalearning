@@ -1,4 +1,4 @@
-package org.lynn;
+package org.lynn.snowFlake;
 
 import java.security.SecureRandom;
 
