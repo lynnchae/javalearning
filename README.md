@@ -2,19 +2,19 @@
 
 ---
 
-### 1. Design Pattern 
+## 1. Design Pattern 
 
 
-#### 1.1 factory desgin
+### 1.1 factory desgin
 
 
-#### 1.2 singleton desgin
+### 1.2 singleton desgin
 
 
-#### 1.3 decorator
+### 1.3 decorator
 
 
-#### 1.4 adapter
+### 1.4 adapter
  >  装饰器与适配器模式都有一个别名叫包装模式(Wrapper)，它们的作用看似都是起到包装一个类或对象的作用，
     但是使用它们的目的不一样。
     适配器模式的意义是将一个接口转变成另一个接口，通过改变接口达到重复使用的目的；
@@ -23,7 +23,7 @@
  
 
 
-#### 1.5 proxy
+### 1.5 proxy
         
 ```java
 public static Object newProxyInstance(ClassLoader loader,
@@ -42,13 +42,20 @@ public static Object newProxyInstance(ClassLoader loader,
 
 ---
 
-#### 1.6 strategy
+### 1.6 strategy
+
+### 1.7 SnowFlake
+ > Twitter分布式自增id算法(64位)
+ 
+|正数|当前时间戳 - 开始时间戳（41位）|数据中心标识（5位）|机器标识（5位）|自增序列（12位）|
+|:-----|:-----|:-----|:-----|:-----|
+|0| 0000000000 0000000000 0000000000 0000000000 0 | 00000 | 00000 | 000000000000|
 
 ---
 
-### 2. Framework
+## 2. Framework
 
-#### 2.1 plugin chain simple implement
+### 2.1 plugin chain simple implement
 
 >  根据mybatis简单实现的一个pluginChain
 
@@ -56,13 +63,13 @@ public static Object newProxyInstance(ClassLoader loader,
 
 
 
-#### 2.2 spring mvc 1.0
+### 2.2 spring mvc 1.0
 
 >  简单实现springMVC定位、加载、注册过程
 
 
 
-#### 2.3 filters
+### 2.3 filters
 
 >  通过匿名内部类创建FilterChain，并对匿名内部类有个深入的理解
     
@@ -71,7 +78,7 @@ public static Object newProxyInstance(ClassLoader loader,
       
 
       
-#### 2.4 spring mvc 2.0
+### 2.4 spring mvc 2.0
 
 >  实现springMVC定位、加载、注册过程
     
@@ -81,7 +88,7 @@ public static Object newProxyInstance(ClassLoader loader,
   
 
        
-#### 2.5 aop拦截
+### 2.5 aop拦截
       
       
 ```Java
@@ -107,7 +114,7 @@ public static Object newProxyInstance(ClassLoader loader,
      
 
    
-#### 2.6 init-method，afterPropertiesSet和BeanPostProcessor
+### 2.6 init-method，afterPropertiesSet和BeanPostProcessor
 
    > 1.  先执行类的构造器，进行实例化
    > 2.  接着执行 BeanPostProcessor -> postProcessBeforeInitialization
@@ -127,9 +134,9 @@ public static Object newProxyInstance(ClassLoader loader,
       
 ---
   
-### 3. Concurrent
+## 3. Concurrent
 
-#### 3.1 先++  后++
+### 3.1 先++  后++
     
    +  先++：先运算，后使用
    
@@ -144,7 +151,7 @@ public static Object newProxyInstance(ClassLoader loader,
 ```
 
   
-#### 3.2 Lock
+### 3.2 Lock
 
 + 自旋锁: 
    > 一种用于保护多线程共享资源的锁，与一般互斥锁（mutex）不同之处在于当自旋锁尝试获取锁时以忙等待（busy waiting）的形式不断地循环检查锁是否可用。
@@ -165,7 +172,7 @@ public static Object newProxyInstance(ClassLoader loader,
     如果某个线程试图获取一个已经由它自己持有的锁时，那么这个请求会立刻成功，并且会将这个锁的计数值加1，
     而当线程退出同步代码块时，计数器将会递减，当计数值等于0时，锁释放。
     
-#### 3.3 JVM内置锁的膨胀
+### 3.3 JVM内置锁的膨胀
     
    >[简书：浅谈偏向锁、轻量级锁、重量级锁](https://www.jianshu.com/p/36eedeb3f912)
    
@@ -219,7 +226,7 @@ public static Object newProxyInstance(ClassLoader loader,
 重量级锁在轻量级锁自旋超过一定的次数，或者一个线程在持有锁，一个在自旋，又有第三个来访时，
 轻量级锁膨胀为重量级锁，重量级锁使除了拥有锁的线程以外的线程都阻塞，防止CPU空转。
 
-#### 3.4 锁优化
+### 3.4 锁优化
 
 * **减少锁的时间**
 
