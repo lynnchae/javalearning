@@ -137,6 +137,10 @@ public class SnowFlakeWorker {
         lastTimestamp = timestamp;
 
         //移位并通过或运算拼到一起组成64位的ID
+        System.out.println("origin time:" + (timestamp - twepoch));
+        System.out.println("origin datacenterId:" + datacenterId);
+        System.out.println("origin workerId:" + workerId);
+        System.out.println("origin sequence:" + sequence);
         return ((timestamp - twepoch) << timestampLeftShift) //
                 | (datacenterId << datacenterIdShift) //
                 | (workerId << workerIdShift) //
@@ -161,14 +165,19 @@ public class SnowFlakeWorker {
         return System.currentTimeMillis();
     }
 
-    public static void main(String[] args) {
-        SnowFlakeWorker flakeWorker = new SnowFlakeWorker(1, 1);
-        Long startTime = System.currentTimeMillis();
-        for(int i = 0;i < 4000;i++){
-            System.out.println(flakeWorker.nextId());
-//            flakeWorker.nextId();
-        }
-        Long end = System.currentTimeMillis();
-        System.out.println("4000个id生成耗时 ： "+(end-startTime) + "ms");
+    protected long getTimestamp(long nextId){
+        return nextId >> timestampLeftShift;
+    }
+
+    protected long getDatacenterId(long nextId){
+        return nextId >> datacenterIdShift & (-1 ^ (-1 << datacenterIdBits));
+    }
+
+    protected long getWorkerId(long nextId){
+        return nextId >> workerIdShift & (-1 ^ (-1 << workerIdBits));
+    }
+
+    protected long getSequence(long nextId){
+        return nextId & (-1 ^ (-1 << sequence));
     }
 }
