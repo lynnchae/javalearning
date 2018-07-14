@@ -372,3 +372,11 @@ Segment继承自ReenTrantLock，所以每个Segment就是个可重入锁，每�
    ③ Read committed (读已提交)：可避免脏读的发生。
     
    ④ Read uncommitted (读未提交)：最低级别，任何情况都无法保证。
+   
+## JDK
+
+### ConcurrentHashMap
+
+   > 1.7 采用Segment extends ReentrantLock 的分段锁技术来实现同步
+   
+   > 1.8 采用Synchronized & CAS 来实现并发同步，并且使用与HashMap相同的数据结构 **Node数组`+链表+红黑树**
