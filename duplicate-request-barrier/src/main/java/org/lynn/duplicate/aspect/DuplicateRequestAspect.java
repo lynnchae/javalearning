@@ -59,7 +59,7 @@ public class DuplicateRequestAspect {
                         ShieldDuplicateRequest shieldDuplicateRequest = (ShieldDuplicateRequest) annotation;
                         StringBuffer cacheKey = new StringBuffer(module).append(":").append(operation).append(":").append(value.toString());
                         Long modCount = redisClientTemplate.incr(cacheKey.toString());
-                        System.out.println(Thread.currentThread().getName() + " : modCount : " + modCount + " : time :" + System.currentTimeMillis());
+                        System.out.println(Thread.currentThread().getName() + " : modCount : " + modCount + " : time :" + System.nanoTime());
 
                         if (modCount > 1) {
                             System.err.println(Thread.currentThread().getName() + " : duplicate request shielded!");
@@ -67,7 +67,7 @@ public class DuplicateRequestAspect {
                             System.out.println(Thread.currentThread().getName() + " >: del key");
 //                            throw new RuntimeException("duplicate request shielded!");
                         } else if (modCount == 1) {
-                            System.out.println(Thread.currentThread().getName() + " : execute>>>>" + System.currentTimeMillis());
+                            System.out.println(Thread.currentThread().getName() + " : execute>>>>" + System.nanoTime());
                             try {
                                 result = joinPoint.proceed();
                             } catch (Throwable throwable) {
