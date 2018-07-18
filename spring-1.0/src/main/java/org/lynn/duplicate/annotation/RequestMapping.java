@@ -1,4 +1,4 @@
-package org.lynn.annotation;
+package org.lynn.duplicate.annotation;
 
 import java.lang.annotation.*;
 
@@ -7,12 +7,12 @@ import java.lang.annotation.*;
  * Class Name : org.lynn.annotation
  * Description :
  * @author : cailinfeng
- * Date : 2018/6/26 16:06
+ * Date : 2018/6/26 16:07
  */
-@Target(ElementType.FIELD)
+@Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface AutoWired {
+public @interface RequestMapping {
 
     String value() default  "";
 

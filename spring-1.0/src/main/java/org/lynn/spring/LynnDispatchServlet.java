@@ -1,8 +1,8 @@
 package org.lynn.spring;
 
-import org.lynn.annotation.AutoWired;
-import org.lynn.annotation.Controller;
-import org.lynn.annotation.Service;
+import org.lynn.duplicate.annotation.AutoWired;
+import org.lynn.duplicate.annotation.Controller;
+import org.lynn.duplicate.annotation.Service;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;

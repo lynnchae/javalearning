@@ -1,9 +1,9 @@
 package org.lynn.context;
 
-import org.lynn.annotation.AutoWired;
-import org.lynn.annotation.Controller;
-import org.lynn.annotation.Service;
-import org.lynn.aspect.AopConfig;
+import org.lynn.duplicate.annotation.AutoWired;
+import org.lynn.duplicate.annotation.Controller;
+import org.lynn.duplicate.annotation.Service;
+import org.lynn.duplicate.aspect.AopConfig;
 import org.lynn.beans.BeanDefinition;
 import org.lynn.beans.BeanPostProcessor;
 import org.lynn.beans.BeanWrapper;

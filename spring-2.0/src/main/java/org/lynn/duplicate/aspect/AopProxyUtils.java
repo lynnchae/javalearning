@@ -1,4 +1,4 @@
-package org.lynn.aspect;
+package org.lynn.duplicate.aspect;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Proxy;

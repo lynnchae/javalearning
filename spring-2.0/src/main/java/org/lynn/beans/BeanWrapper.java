@@ -1,7 +1,7 @@
 package org.lynn.beans;
 
-import org.lynn.aspect.AopConfig;
-import org.lynn.aspect.AopProxy;
+import org.lynn.duplicate.aspect.AopConfig;
+import org.lynn.duplicate.aspect.AopProxy;
 
 public class BeanWrapper{
 

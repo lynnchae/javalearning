@@ -1,6 +1,6 @@
 package org.lynn.test.service;
 
-import org.lynn.annotation.Service;
+import org.lynn.duplicate.annotation.Service;
 
 @Service
 public class HelloServiceImpl implements HelloService{

@@ -1,4 +1,4 @@
-package org.lynn.annotation;
+package org.lynn.duplicate.annotation;
 
 import java.lang.annotation.*;
 
@@ -9,10 +9,10 @@ import java.lang.annotation.*;
  * @author : cailinfeng
  * Date : 2018/6/26 16:07
  */
-@Target(ElementType.PARAMETER)
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface RequestParam {
+public @interface Service {
 
     String value() default  "";
 

@@ -1,9 +1,9 @@
 package org.lynn.demo.action;
 
-import org.lynn.annotation.AutoWired;
-import org.lynn.annotation.Controller;
-import org.lynn.annotation.RequestMapping;
-import org.lynn.annotation.RequestParam;
+import org.lynn.duplicate.annotation.AutoWired;
+import org.lynn.duplicate.annotation.Controller;
+import org.lynn.duplicate.annotation.RequestMapping;
+import org.lynn.duplicate.annotation.RequestParam;
 import org.lynn.demo.service.DemoService;
 
 /**

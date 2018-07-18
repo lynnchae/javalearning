@@ -1,6 +1,6 @@
 package org.lynn.demo.service;
 
-import org.lynn.annotation.Service;
+import org.lynn.duplicate.annotation.Service;
 
 /**
  * Class Name : org.lynn.service

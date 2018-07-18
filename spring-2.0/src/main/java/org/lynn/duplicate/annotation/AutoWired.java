@@ -1,4 +1,4 @@
-package org.lynn.annotation;
+package org.lynn.duplicate.annotation;
 
 import java.lang.annotation.*;
 

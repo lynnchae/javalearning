@@ -1,4 +1,4 @@
-package org.lynn.aspect;
+package org.lynn.duplicate.aspect;
 
 public class LogAspect {
 

@@ -1,4 +1,4 @@
-package org.lynn.aspect;
+package org.lynn.duplicate.aspect;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;

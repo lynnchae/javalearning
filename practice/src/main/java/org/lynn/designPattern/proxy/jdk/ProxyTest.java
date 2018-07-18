@@ -1,6 +1,6 @@
 package org.lynn.designPattern.proxy.jdk;
 
-import org.junit.jupiter.api.Test;
+import org.testng.annotations.Test;
 
 /**
  * Class Name : org.lynn.designPattern.proxy
