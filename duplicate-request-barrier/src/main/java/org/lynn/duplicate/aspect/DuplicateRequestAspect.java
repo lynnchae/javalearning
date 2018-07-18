@@ -7,7 +7,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.lynn.duplicate.annotation.Shield;
-import org.lynn.duplicate.annotation.ShieldDuplicateRequest;
+import org.lynn.duplicate.annotation.ShieldDuplicateParam;
 import org.lynn.duplicate.redis.RedisClientTemplate;
 import org.springframework.stereotype.Component;
 
@@ -54,9 +54,9 @@ public class DuplicateRequestAspect {
             Annotation[][] annotations = realMethod.getParameterAnnotations();
             for (int i = 0; i < annotations.length; i++) {
                 for (Annotation annotation : annotations[i]) {
-                    if (annotation instanceof ShieldDuplicateRequest) {
+                    if (annotation instanceof ShieldDuplicateParam) {
                         Object value = args[i];
-                        ShieldDuplicateRequest shieldDuplicateRequest = (ShieldDuplicateRequest) annotation;
+                        ShieldDuplicateParam shieldDuplicateParam = (ShieldDuplicateParam) annotation;
                         StringBuffer cacheKey = new StringBuffer(module).append(":").append(operation).append(":").append(value.toString());
                         Long modCount = redisClientTemplate.incr(cacheKey.toString());
                         System.out.println(Thread.currentThread().getName() + " : modCount : " + modCount + " : time :" + System.nanoTime());

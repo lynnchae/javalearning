@@ -12,7 +12,7 @@ import java.lang.annotation.*;
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.PARAMETER)
-public @interface ShieldDuplicateRequest {
+public @interface ShieldDuplicateParam {
 
     int timeout() default 1000;
 
