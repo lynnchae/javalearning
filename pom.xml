@@ -13,10 +13,11 @@
         <module>practice</module>
         <module>spring-2.0</module>
         <module>duplicate-request-barrier</module>
+        <module>spring</module>
     </modules>
 
     <properties>
-        <spring-framework.version>4.3.8.RELEASE</spring-framework.version>
+        <spring-framework.version>4.3.18.RELEASE</spring-framework.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -103,6 +104,16 @@
             </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
+                <artifactId>spring-aop</artifactId>
+                <version>${spring-framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-aspects</artifactId>
+                <version>${spring-framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
                 <artifactId>spring-jms</artifactId>
                 <version>${spring-framework.version}</version>
             </dependency>
@@ -114,6 +125,11 @@
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-orm</artifactId>
+                <version>${spring-framework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-oxm</artifactId>
                 <version>${spring-framework.version}</version>
             </dependency>
             <dependency>
@@ -147,6 +163,12 @@
                 <artifactId>slf4j-api</artifactId>
                 <version>1.7.25</version>
             </dependency>
+            <dependency>
+                <groupId>aopalliance</groupId>
+                <artifactId>aopalliance</artifactId>
+                <version>1.0</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

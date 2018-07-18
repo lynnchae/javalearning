@@ -1,6 +1,7 @@
-package org.lynn.beaninit;
+package org.lynn;
 
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class InitBean implements InitializingBean {
 
@@ -15,5 +16,10 @@ public class InitBean implements InitializingBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         System.out.println("InitBean afterPropertiesSet execute...");
+    }
+
+    public static void main(String[] args){
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath*:applicationContext.xml");
+        InitBean initBean = (InitBean) context.getBean("initBean");
     }
 }
