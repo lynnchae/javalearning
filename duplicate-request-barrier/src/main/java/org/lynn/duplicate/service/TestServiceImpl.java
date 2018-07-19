@@ -1,7 +1,7 @@
 package org.lynn.duplicate.service;
 
 import org.lynn.duplicate.annotation.Shield;
-import org.lynn.duplicate.annotation.ShieldDuplicateRequest;
+import org.lynn.duplicate.annotation.ShieldDuplicateParam;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,8 +16,14 @@ public class TestServiceImpl implements TestService {
 
     @Override
     @Shield(module = "order", operation = "pay")
-    public String payTest(String userId, @ShieldDuplicateRequest String orderNid) {
-        System.out.println("-----------------------------------------------orderNid is " + orderNid);
+    public String payTest(String userId, @ShieldDuplicateParam String orderNid) {
+        System.out.println("----------开始执行支付:>>>" + orderNid);
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("----------支付成功:>>>" + orderNid);
         return null;
     }
 }
