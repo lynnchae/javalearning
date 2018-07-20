@@ -380,3 +380,11 @@ Segment继承自ReenTrantLock，所以每个Segment就是个可重入锁，每�
    > 1.7 采用(Segment extends ReentrantLock)[] + HashEntry[] 的分段锁技术来实现同步
    
    > 1.8 采用Synchronized & CAS 来实现并发同步，并且使用与HashMap相同的数据结构 **Node数组 + 链表 + 红黑树**
+   
+
+## 6. Distribution System
+
+### 6.1 CAP 
++ C（一致性）：所有的节点上的数据时刻保持同步
++ A（可用性）：每个请求都能接受到一个响应，无论响应成功或失败
++ P（分区容错）：系统应该能持续提供服务，即使系统内部有消息丢失（分区）
