@@ -112,6 +112,8 @@ public static Object newProxyInstance(ClassLoader loader,
                                     <- CglibAopProxy
        ProxyFactory保存了aop拦截的配置信息                    
      
+  > AbstractAutoProxyCreator实现了Ordered接口，并将期顺序设置为Ordered.LOWEST_PRECEDENCE，最低优先级
+    保证aop后置处理器最后调用
 
    
 ### 2.6 init-method，afterPropertiesSet和BeanPostProcessor
