@@ -131,7 +131,23 @@ public static Object newProxyInstance(ClassLoader loader,
     那么当ApplicationContext实例化singleton Abean时，
     必须确保上述singleton Abean所依赖所有bean也被预先初始化，包括设置为lazy-init的Bbean,
     这种情况也符合延时加载的bean在第一次调用时才被实例化的规则。
-      
+  
+### 2.7 Spring Annotation 
+
+#### @Component 注解的“派生”
+
+  > `@Controller`  `@Service`  `@Repository`均为`@Component`注解的派生，类似注解的继承关系
+  
+#### @Resource & @Autowire
+
+ + @Resource默认是按照名称来装配注入的，只有当找不到与名称匹配的bean才会按照类型来装配注入；
+
+ + @Autowired默认是按照类型装配注入的，如果想按照名称来转配注入，则需要结合@Qualifier一起使用；
+ 
+ + @Resource注解是又J2EE提供，而@Autowired是由Spring提供，故减少系统对spring的依赖建议使用@Resource的方式；
+ 
+ + @Resource和@Autowired都可以书写标注在字段或者该字段的setter方法之上
+   
 ---
   
 ## 3. Concurrent
