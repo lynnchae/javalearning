@@ -400,6 +400,23 @@ Segment继承自ReenTrantLock，所以每个Segment就是个可重入锁，每�
    > 1.8 采用Synchronized & CAS 来实现并发同步，并且使用与HashMap相同的数据结构 **Node数组 + 链表 + 红黑树**
    
 
+### 5.2 Throwable
+
+Error 和 Excetpion均继承自Throwable
+
++ Error : 程序无法处理的错误，表示运行应用程序中较严重问题。大多数错误与代码编写者执行的操作无关，而表示代码运行时 JVM（Java 虚拟机）出现的问题。
+
++ Exception : 程序本身可以处理的异常。
+  + Unchecked Exception: 
+    + 指的是程序的瑕疵或逻辑错误，并且在运行时无法恢复。 
+    + 包括Error与RuntimeException及其子类，如：OutOfMemoryError, UndeclaredThrowableException, IllegalArgumentException, IllegalMonitorStateException, NullPointerException, IllegalStateException, IndexOutOfBoundsException等。 
+    + 语法上不需要声明抛出异常。 
+
+  + Checked Exception: 
+    + 代表程序不能直接控制的无效外界情况（如用户输入，数据库问题，网络异常，文件丢失等） 
+    + 除了Error和RuntimeException及其子类之外，如：ClassNotFoundException, NamingException, ServletException, SQLException, IOException等。 
+    + 需要try catch处理或throws声明抛出异常。 
+
 ## 6. Distribution System
 
 ### 6.1 CAP 
