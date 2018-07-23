@@ -43,5 +43,12 @@ public class App {
         TASK_POOL.awaitTermination(1, TimeUnit.SECONDS);
     }
 
+    @Test
+    public void testAspectj() {
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext-redis.xml");
+        TestService testService = (TestService) context.getBean("testService");
+        testService.outerMethod();
+    }
+
 
 }

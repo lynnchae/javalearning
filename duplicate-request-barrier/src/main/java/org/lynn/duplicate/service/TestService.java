@@ -12,4 +12,8 @@ public interface TestService {
 
     String payTest(String userId,String orderNid);
 
+    String outerMethod();
+
+    String innerMethod();
+
 }

@@ -26,4 +26,18 @@ public class TestServiceImpl implements TestService {
         System.out.println("----------支付成功:>>>" + orderNid);
         return null;
     }
+
+
+    @Override
+    public String outerMethod() {
+        System.out.println("outer method execute......");
+        this.innerMethod();
+        return null;
+    }
+
+    @Override
+    public String innerMethod() {
+        System.out.println("inner method execute......");
+        return null;
+    }
 }
