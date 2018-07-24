@@ -1,5 +1,6 @@
 package org.lynn.designPattern.proxy.cglib;
 
+import net.sf.cglib.core.DebuggingClassWriter;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -12,6 +13,7 @@ public class CglibProxyTest {
 
     @Test
     public void test(){
+        System.setProperty(DebuggingClassWriter.DEBUG_LOCATION_PROPERTY, "D:\\class");
         UserLog userLog = new UserLog();
         UserLog proxy = (UserLog) new CglibProxy(userLog).getProxyInstance();
         proxy.doLog();

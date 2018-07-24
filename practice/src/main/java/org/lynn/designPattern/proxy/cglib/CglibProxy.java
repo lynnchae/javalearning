@@ -27,9 +27,17 @@ public class CglibProxy implements MethodInterceptor {
         return enhancer.create();
     }
 
+    /**
+     * @param o 代理对象本身
+     * @param method 被拦截的方法对象
+     * @param args 方法调用入参
+     * @param methodProxy 用于调用被拦截方法的方法代理对象
+     * @return
+     * @throws Throwable
+     */
     public Object intercept(Object o, Method method, Object[] args, MethodProxy methodProxy) throws Throwable {
         System.out.println("cglib proxy transaction manager start >.......");
-        method.invoke(target,args);
+        methodProxy.invokeSuper(o,args);
         System.out.println("cglib proxy transaction manager commit <.......");
         return null;
     }

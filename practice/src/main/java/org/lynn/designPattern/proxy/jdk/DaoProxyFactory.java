@@ -12,7 +12,7 @@ import java.lang.reflect.Proxy;
  */
 public class DaoProxyFactory {
 
-    /**
+    /**MethodProxy
      * 被代理类
      */
     private Object target;

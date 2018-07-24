@@ -40,6 +40,60 @@ public static Object newProxyInstance(ClassLoader loader,
 |JDK动态代理|代理类与委托类实现同一接口，主要是通过代理类实现InvocationHandler，并重写invoke方法来进行动态代理的，在invoke方法中将对方法进行增强处理|不需要硬编码接口，代码复用率高|只能够代理实现了接口的委托类|底层使用反射机制进行方法的调用|
 |CGLIB动态代理|代理类将委托类作为自己的父类并为其中的非final委托方法创建两个方法， 一个是与委托方法签名相同的方法，它在方法中会通过super调用委托方法；另一个是代理类独有的方法。在代理方法中，它会判断是否存在实现了MethodInterceptor接口的对象，若存在则将调用intercept方法对委托方法进行代理|可以在运行时对类或者是接口进行增强操作，且委托类无需实现接口|不能对final类以及final方法进行代理|底层将方法全部存入一个数组中，通过数组索引直接进行方法调用|
 
+***Cglib***
+
+```java
+    //final修饰的类和方法不能被继承和修改
+    public class UserLog$$EnhancerByCGLIB$$9a9593ca extends UserLog implements Factory{
+        //...
+        final void CGLIB$doLog$0() {
+            super.doLog();
+        }
+    
+        public final void doLog() {
+            MethodInterceptor var10000 = this.CGLIB$CALLBACK_0;
+            if (this.CGLIB$CALLBACK_0 == null) {
+                CGLIB$BIND_CALLBACKS(this);
+                var10000 = this.CGLIB$CALLBACK_0;
+            }
+    
+            if (var10000 != null) {
+                var10000.intercept(this, CGLIB$doLog$0$Method, CGLIB$emptyArgs, CGLIB$doLog$0$Proxy);
+            } else {
+                super.doLog();
+            }
+        }
+        //...
+    }
+    
+     private static class FastClassInfo{
+            FastClass f1; // org.lynn.designPattern.proxy.cglib.UserLog的fastclass
+            FastClass f2; // UserLog$$EnhancerByCGLIB$$9a9593ca 的fastclass
+            int i1; //方法doLog在f1中的索引
+            int i2; //方法CGLIB$doLog$0在f2中的索引
+     }
+     
+     public class MethodProxy {
+         //...
+         public Object invokeSuper(Object obj, Object[] args) throws Throwable {
+             try {
+                 this.init();
+                 MethodProxy.FastClassInfo fci = this.fastClassInfo;
+                 return fci.f2.invoke(fci.i2, obj, args);
+             } catch (InvocationTargetException var4) {
+                 throw var4.getTargetException();
+             }
+         }
+         //...
+     }
+     //使用proxy.invokeSuper(obj,args)方法，就是执行原始类的方法。
+     // 还有一个方法proxy.invoke(obj,args)，这是执行生成子类的方法。
+     // 如果传入的obj就是子类的话，会发生内存溢出，因为子类的方法不挺地进入intercept方法，
+     // 而这个方法又去调用子类的方法，两个方法直接循环调用了。
+```
+
+    cglib采用了FastClass的机制来实现对被拦截方法的调用。FastClass机制就是对一个类的方法建立索引，通过索引来直接调用相应的方法。
+
 ---
 
 ### 1.6 strategy
