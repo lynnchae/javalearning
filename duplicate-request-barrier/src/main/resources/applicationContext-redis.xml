@@ -69,7 +69,8 @@
         <constructor-arg ref="redisTemplate"/>
     </bean>
 
-    <cache:annotation-driven mode="aspectj"/>
-
     <context:load-time-weaver />
+
+    <cache:annotation-driven cache-manager="cacheManager" mode="aspectj"/>
+
 </beans>

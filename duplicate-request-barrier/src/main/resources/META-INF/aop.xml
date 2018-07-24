@@ -1,0 +1,5 @@
+<aspectj>
+    <weaver options="-verbose -showWeaveInfo">
+        <include within="org.lynn.duplicate..*"/>
+    </weaver>
+</aspectj>

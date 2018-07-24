@@ -5,7 +5,6 @@ import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
-import org.springframework.stereotype.Component;
 
 /**
  * Class Name : org.lynn.duplicate.aspect
@@ -14,7 +13,7 @@ import org.springframework.stereotype.Component;
  * @author : cailinfeng
  * Date : 2018/7/23 17:11
  */
-@Component
+//@Component
 @Aspect
 public class InnerMethodInvokeAspect {
 

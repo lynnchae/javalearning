@@ -47,7 +47,7 @@ public class App {
     public void testAspectj() {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext-redis.xml");
         TestService testService = (TestService) context.getBean("testService");
-        testService.outerMethod();
+        testService.outerMethod("20180724");
     }
 
 
