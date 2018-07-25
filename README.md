@@ -483,6 +483,15 @@ Error 和 Excetpion均继承自Throwable
 
    + String类中的.equals()方法重写了，比较的是两个引用对象的内容是否想同（即是否是完全相同的汽车（注意，有两辆汽车，且一模一样，完全相同））。
 
+### 5.4 ***object.wait() && Thread.sleep()***
+
++ wait只能在同步（synchronize）环境中被调用，而sleep不需要。
++ 进入wait状态的线程能够被notify和notifyAll线程唤醒，但是进入sleeping状态的线程不能被notify方法唤醒。
++ wait通常有条件地执行，线程会一直处于wait状态，直到某个条件变为真。但是sleep仅仅让你的线程进入睡眠状态。
++ wait方法在进入wait状态的时候会释放对象的锁，但是sleep方法不会。
++ wait方法是针对一个被同步代码块加锁的对象，而sleep是针对一个线程。
+
+ 
 ## 6. Distribution System
 
 ### 6.1 CAP 
