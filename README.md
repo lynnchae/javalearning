@@ -5,16 +5,16 @@
 ## 1. Design Pattern 
 
 
-### 1.1 factory desgin
+### 1.1 Factory desgin
 
 
-### 1.2 singleton desgin
+### 1.2 Singleton desgin
 
 
-### 1.3 decorator
+### 1.3 Decorator
 
 
-### 1.4 adapter
+### 1.4 Adapter
  >  装饰器与适配器模式都有一个别名叫包装模式(Wrapper)，它们的作用看似都是起到包装一个类或对象的作用，
     但是使用它们的目的不一样。
     适配器模式的意义是将一个接口转变成另一个接口，通过改变接口达到重复使用的目的；
@@ -23,7 +23,7 @@
  
 
 
-### 1.5 proxy
+### 1.5 Proxy
         
 ```java
 public static Object newProxyInstance(ClassLoader loader,
@@ -96,7 +96,11 @@ public static Object newProxyInstance(ClassLoader loader,
 
 ---
 
-### 1.6 strategy
+### 1.6 Strategy
+
+### 1.7 TemplateMethod
+
+模板方法设计模式
 
 ### 1.7 SnowFlake
  > Twitter分布式自增id算法(64位)
