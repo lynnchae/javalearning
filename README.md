@@ -445,7 +445,7 @@ Segment继承自ReenTrantLock，所以每个Segment就是个可重入锁，每�
     
    ① Serializable (串行化)：可避免脏读、不可重复读、幻读的发生。
     
-   ② Repeatable read (可重复读)：可避免脏读、不可重复读的发生。
+   ② Repeatable read (可重复读)：可避免脏读、不可重复读的发生。（Mysql默认隔离级别）
     
    ③ Read committed (读已提交)：可避免脏读的发生。
     
