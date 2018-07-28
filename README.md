@@ -208,6 +208,12 @@ public static Object newProxyInstance(ClassLoader loader,
  
  + @Resource和@Autowired都可以书写标注在字段或者该字段的setter方法之上
    
+#### Spring MVC
+
+ + HandlerMapping 定位
+    + 遍历容器中所有的bean，找到@Controller 或者 @RequestMapping 注解的bean，处理成HandlerMethod
+    
+   
 ---
   
 ## 3. Concurrent
