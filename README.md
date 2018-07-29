@@ -211,7 +211,7 @@ public static Object newProxyInstance(ClassLoader loader,
 #### Spring MVC
 
  + HandlerMapping 定位
-    + 遍历容器中所有的bean，找到@Controller 或者 @RequestMapping 注解的bean，处理成HandlerMethod
+    + 遍历容器中所有的bean，(isHandler())找到@Controller 或者 @RequestMapping 注解的bean，处理成HandlerMethod，注册到mappingRegisry
     
    
 ---
