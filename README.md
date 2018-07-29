@@ -211,8 +211,11 @@ public static Object newProxyInstance(ClassLoader loader,
 #### Spring MVC
 
  + HandlerMapping 定位
-    + 遍历容器中所有的bean，(isHandler())找到@Controller 或者 @RequestMapping 注解的bean，处理成HandlerMethod，注册到mappingRegisry
-    
+    + 遍历容器中所有的bean，(isHandler())找到@Controller 或者 @RequestMapping 注解的bean，处理成HandlerMethod，注册到mappingRegistry
+    + HandlerAdapter，为了适配handler并统一返回ModelAndView对象，通过HandlerAdapter调用HandlerMethod
+  ```java
+    ModelAndView handle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception;
+  ```
    
 ---
   
