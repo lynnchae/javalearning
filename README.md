@@ -35,7 +35,7 @@ public static Object newProxyInstance(ClassLoader loader,
 
 ---
 
-|代理方式|实现|优点|缺点|特点
+|代理方式|实现|优点|缺点|特点|
 |:-----|:-----|:-----|:-----|:-----|
 |JDK动态代理|代理类与委托类实现同一接口，主要是通过代理类实现InvocationHandler，并重写invoke方法来进行动态代理的，在invoke方法中将对方法进行增强处理|不需要硬编码接口，代码复用率高|只能够代理实现了接口的委托类|底层使用反射机制进行方法的调用|
 |CGLIB动态代理|代理类将委托类作为自己的父类并为其中的非final委托方法创建两个方法， 一个是与委托方法签名相同的方法，它在方法中会通过super调用委托方法；另一个是代理类独有的方法。在代理方法中，它会判断是否存在实现了MethodInterceptor接口的对象，若存在则将调用intercept方法对委托方法进行代理|可以在运行时对类或者是接口进行增强操作，且委托类无需实现接口|不能对final类以及final方法进行代理|底层将方法全部存入一个数组中，通过数组索引直接进行方法调用|
@@ -174,13 +174,15 @@ public static Object newProxyInstance(ClassLoader loader,
     保证aop后置处理器最后调用
 
    
-### 2.6 init-method，afterPropertiesSet和BeanPostProcessor
+### 2.6 Bean的初始化扩展方法
 
-   > 1.  先执行类的构造器，进行实例化
-   > 2.  接着执行 BeanPostProcessor -> postProcessBeforeInitialization
-   > 3.  然后到InitializingBean -> afterPropertiesSet
-   > 4.  再到配置的init-method 方法
-   > 5.  最后 BeanPostProcessor -> postProcessAfterInitialization
+***init-method，afterPropertiesSet和BeanPostProcessor***
+
+> 1.  先执行类的构造器，进行实例化
+> 2.  接着执行 BeanPostProcessor -> postProcessBeforeInitialization
+> 3.  然后到InitializingBean -> afterPropertiesSet
+> 4.  再到配置的init-method 方法
+> 5.  最后 BeanPostProcessor -> postProcessAfterInitialization
 
 +            
     init-method和afterPropertiesSet可以针对某个单独的bean进行处理，
@@ -517,10 +519,10 @@ Error 和 Excetpion均继承自Throwable
 #### FailCluster
 |Feature|Strength|Problem|
 |:-----:|:-----|:-----|
-|FailOver|失败自动切换，当出现失败，重试其它服务器，通常用于读操作（推荐使用）|重试会带来更长延迟
-|FailFast|快速失败，只发起一次调用，失败立即报错,通常用于非幂等性的写操作|如果有机器正在重启，可能会出现调用失败
-|FailBack|失败自动恢复，后台记录失败请求，定时重发，通常用于消息通知操作|不可靠，重启丢失
-|FailSafe|失败安全，出现异常时，直接忽略，通常用于写入审计日志等操作|调用信息丢失
-|Forking|并行调用多个服务器，只要一个成功即返回，通常用于实时性要求较高的读操作|需要浪费更多服务资源
-|Broadcast|广播调用所有提供者，逐个调用，任意一台报错则报错，通常用于更新提供方本地状态|速度慢，任意一台报错则报错
+|FailOver|失败自动切换，当出现失败，重试其它服务器，通常用于读操作（推荐使用）|重试会带来更长延迟|
+|FailFast|快速失败，只发起一次调用，失败立即报错,通常用于非幂等性的写操作|如果有机器正在重启，可能会出现调用失败|
+|FailBack|失败自动恢复，后台记录失败请求，定时重发，通常用于消息通知操作|不可靠，重启丢失|
+|FailSafe|失败安全，出现异常时，直接忽略，通常用于写入审计日志等操作|调用信息丢失|
+|Forking|并行调用多个服务器，只要一个成功即返回，通常用于实时性要求较高的读操作|需要浪费更多服务资源|
+|Broadcast|广播调用所有提供者，逐个调用，任意一台报错则报错，通常用于更新提供方本地状态|速度慢，任意一台报错则报错|
     
