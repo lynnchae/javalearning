@@ -506,6 +506,25 @@ Error 和 Excetpion均继承自Throwable
 + wait方法在进入wait状态的时候会释放对象的锁，但是sleep方法不会。
 + wait方法是针对一个被同步代码块加锁的对象，而sleep是针对一个线程。
 
+### 5.5 Collection & Map
+
+#### Collection：单列集合的根接口
++ List：元素有序  可重复 
+  + ArrayList：类似一个长度可变的数组 。适合查询，不适合增删
+  + LinkedList：底层是双向循环链表。适合增删，不适合查询。
++ Set：元素无序，不可重复
+  + HashSet：根据对象的哈希值确定元素在集合中的位置
+  + TreeSet: 以二叉树的方式存储元素，实现了对集合中的元素排序
+#### Map：双列集合的根接口，用于存储具有键（key）、值（value）映射关系的元素。
++ HashMap：用于存储键值映射关系，不能出现重复的键key，key和value允许null
++ TreeMap：用来存储键值映射关系，不能出现重复的键key，所有的键按照二叉树的方式排列
+
+|Hashtable|HashMap|
+|:----|:----|
+|方法是同步的|方法是非同步的|
+|基于Dictionary类|基于AbstractMap，而AbstractMap基于Map接口的实现|
+|key和value都不允许为null，遇到null，直接返回 NullPointerException|key和value都允许为null，遇到key为null的时候，调用putForNullKey方法进行处理，而对value没有处理|
+|hash数组默认大小是11，扩充方式是old*2+1|hash数组的默认大小是16，而且一定是2的指数|
  
 ## 6. Distribution System
 
