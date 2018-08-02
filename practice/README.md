@@ -147,13 +147,15 @@
 
 ###  2.10 volatile的使用
 
-###  2.11 synchronied的使用
+###  2.11 synchronized的使用
+
++ 参考锁膨胀
 
 ### 2.12 Reentrantlock的实现和Synchronied的区别
 
 + ReentrantLock依赖于jdk的实现，而Synchronized依赖于jvm实现
 + ReenTrantLock可以指定是公平锁还是非公平锁。而synchronized只能是非公平锁。 
-+ ReenTrantLock提供了一个Condition（条件）类，用来实现分组唤醒需要唤醒的线程们，而不是像synchronized要么随机唤醒一个线程要么唤醒全部线程。
++ ReenTrantLock提供了一个Condition（条件）类，用来实现分组唤醒需要唤醒的线程们，而不是像synchronized要么随机唤醒一个线程要么唤醒全部z线程。
 + ReenTrantLock提供了一种能够中断等待锁的线程的机制，通过lock.lockInterruptibly()来实现这个机制。
 
 ### 2.13 CAS的实现原理以及问题
@@ -211,6 +213,17 @@ CAS 操作包含三个操作数 —— 内存位置（V）、预期原值（A）
 ### 2.16 类加载机制的步骤，每一步做了什么，static和final修改的成员变量的加载时机
 
 ### 2.17 双亲委派模型
+
++ `Bootstrap ClassLoader`  java_home\lib 核心类库
+  + `Extension ClassLoader` java_home\lib\ext 扩展类库
+    + `Application ClassLoader` 用户路径classpath下的类
+      + `User ClassLoader `
++ TCCL (ThreadContextClassLoader)：线程上下文加载器打破双亲委派模型
+  + 例如：SPI机制的核心代码由bootstrap classLoader加载，根据双亲委派模型，无法委派Application ClassLoader来加载第三方实现类，所以通过获取线程上下文类加载器来加载spi的实现类
+
++ 双亲委派模型工作过程是：如果一个类加载器收到类加载的请求，它首先不会自己去尝试加载这个类，而是把这个请求委派给父类加载器完成。每个类加载器都是如此，只有当父加载器在自己的搜索范围内找不到指定的类时（即`ClassNotFoundException`），子加载器才会尝试自己去加载。
+
++ 保证加载环境中类的唯一性 
 
 ### 2.18 反射机制：反射动态擦除泛型、反射动态调用方法等
 
