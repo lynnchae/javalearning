@@ -245,6 +245,27 @@ CAS 操作包含三个操作数 —— 内存位置（V）、预期原值（A）
 
 ### 2.20 JVM内存管理机制：有哪些区域，每个区域做了什么
 
++ [JDK1.8内存模型](https://blog.csdn.net/bruce128/article/details/79357870)
+  + 程序计数器：指向当前线程正在执行的字节码代码的行号 
+  + java虚拟机栈：生命周期与线程同进同退 
+  + 本地方法栈： 为native方法服务
+  + 堆(heap space)
+    + YoungGen
+      + Eden(8/10)
+      + Survivor01(1/10) & Survivor02(1/10)
+      + 年轻代对象默认年龄15，即经历的minorGC次数
+    + OldGen
+  + 元数据区（存放虚拟机加载的类信息，静态变量，常量等数据 ）
++ GC过程
+  + 大部分对象刚创建的时候，JVM会将其分布到Eden区域。
+  + 当Eden区域中的对象达到一定的数目的时候，就会进行Minor GC，经历这次垃圾回收后所有存活的对象都会进入两个Suvivor Place中的一个。
+    + 当触发minor GC时，会先把Eden中存活的对象复制到to Survivor中；
+    + 然后再看from survivor，如果次数达到年老代的标准，就复制到年老代中；如果没有达到则复制到to survivor中，如果to survivor满了，则复制到年老代中。
+    + 然后调换from survivor 和 to survivor的名字，保证每次to survivor都是空的等待对象复制到那里的。
+  + 同一时刻两个Suvivor Place，即s0和s1中总有一个总是空的。
+  + 年轻代中的对象经历过了多次的垃圾回收就会转移到年老代中。
++ 大对象连续内存空间直接分配在老年代
+
 ### 2.21 JVM垃圾回收机制：垃圾回收算法 垃圾回收器 垃圾回收策略
 
 ### 2.22 jvm参数的设置和jvm调优
