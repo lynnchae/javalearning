@@ -525,7 +525,19 @@ Error 和 Excetpion均继承自Throwable
 |基于Dictionary类|基于AbstractMap，而AbstractMap基于Map接口的实现|
 |key和value都不允许为null，遇到null，直接返回 NullPointerException|key和value都允许为null，遇到key为null的时候，调用putForNullKey方法进行处理，而对value没有处理|
 |hash数组默认大小是11，扩充方式是old*2+1|hash数组的默认大小是16，而且一定是2的指数|
+
+### 5.6 浅拷贝(ShallowClone) & 深拷贝(DeepClone)
+
+**浅拷贝**
+> 浅拷贝是按位拷贝对象，它会创建一个新对象，这个对象有着原始对象属性值的一份精确拷贝。
+如果属性是基本类型，拷贝的就是基本类型的值；
+如果属性是内存地址（引用类型），拷贝的就是内存地址 ，因此如果其中一个对象改变了这个地址，就会影响到另一个对象。
  
+ **深拷贝**
+> 深拷贝会拷贝所有的属性，并拷贝属性指向的动态分配的内存。当对象和它所引用的对象一起拷贝时即发生深拷贝。
+
++ 通过序列化、反序列化方式实现对象的深拷贝
++ transient属性无法实现拷贝
 ## 6. Distribution System
 
 ### 6.1 CAP 
