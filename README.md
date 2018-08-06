@@ -293,7 +293,7 @@ public static Object newProxyInstance(ClassLoader loader,
 
 [JAVA锁的膨胀过程和优化](https://www.cnblogs.com/dsj2016/p/5714921.html)
 + 加锁的过程：JVM在当前线程的栈帧中创建用于储存锁记录的空间（LockRecord），然后把MarkWord放进去，
-  同时生成一个叫Owner的指针指向那个被加锁的对象，同时用CAS尝试把对象头的MarkWord成一个指向锁记录（LockRecord）的指针。
+  同时生成一个叫Owner的指针指向那个被加锁的对象，同时用CAS尝试把对象头的MarkWord替换成一个指向锁记录（LockRecord）的指针。
   成功了就拿到了锁。那么失败了呢？
   《深入理解JVM》的说法：失败了，去查看MarkWord的值。有2种可能：1，指向当前线程的指针，2，别的值。
   - 如果是1，那么说明发生了“重入”的情况，直接当做成功获得锁处理。
