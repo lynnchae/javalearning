@@ -375,8 +375,6 @@ CAS 操作包含三个操作数 —— 内存位置（V）、预期原值（A）
 
 ### 2.30 java中bio nio aio的区别和联系
 
-[bio nio aio](https://www.sohu.com/a/119086870_505779)
-
 ### 2.31 为什么bio是阻塞的 nio是非阻塞的 nio是模型是什么样的
 
 ### 2.32 Java io的整体架构和使用的设计模式
@@ -434,16 +432,7 @@ CAS 操作包含三个操作数 —— 内存位置（V）、预期原值（A）
 
 ### 2.45 乐观锁和悲观锁的实现
 
-+ 乐观锁：CAS
-+ 悲观锁：Synchronized| Reentrantlock
-
 ### 2.46 synchronized实现原理
-
-> monitorenter & monitorexit
-
-+ 偏向锁
-+ 轻量级锁
-+ 重量级锁
 
 ### 2.47 你在项目中遇到的困难和怎么解决的
 
@@ -454,50 +443,6 @@ CAS 操作包含三个操作数 —— 内存位置（V）、预期原值（A）
 ### 2.50 生产者消费者代码实现
 
 ### 2.51 死锁代码实现
-
-```java
-public static void main(String[] args) {
-        final Object o1 = new Object();
-        final Object o2 = new Object();
-        Thread t1 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                synchronized (o1) {
-                    try {
-                        System.out.println(Thread.currentThread().getName() + "--> o1 get lock");
-                        Thread.sleep(Long.parseLong("2000"));
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    synchronized (o2) {
-                        System.out.println(Thread.currentThread().getName() + "-->>> o2 get lock");
-                    }
-                }
-            }
-        },"deadlock-t1-thread");
-
-        Thread t2 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                synchronized (o2) {
-                    try {
-                        System.out.println(Thread.currentThread().getName() + "--> o2 get lock");
-                        Thread.sleep(Long.parseLong("2000"));
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    synchronized (o1) {
-                        System.out.println(Thread.currentThread().getName() + "-->>> o1 get lock");
-                    }
-                }
-            }
-        },"deadlock-t2-thread");
-        t1.start();
-        t2.start();
-    }
-```
-
-
 
 ### 2.52 Future和ListenableFuture 异步回调相关
 
@@ -571,6 +516,15 @@ Least Recently Used
       + 2） 每个Server发出一个投票（myid，ZXID），由于此集群已经运行过，所以每个Server上的ZXID可能不同。假设Server1的ZXID为145，Server3的为122，第一轮投票中，Server1和Server3都投自己，票分别为（1，145）、（3，122），将自己的票发送给集群中所有机器。 
       + 3） 每个Server接收接收来自其他Server的投票，降下来的步骤与启动时步骤相同。
 + ZAB协议
++ FastLeaderElection
++ zookeeper数据的读写
+  + **写**
+    + Client向zk的server1上写数据，发送一个写的请求。
+    + 如果server1不是leader,那么server1会把接收的请求转发给leader。这个leader会将写请求广播给各个server，比如server1和server2,各个server写成功之后就会通知leader。
+    + 当leader收到大多数server写成功的消息，那么就说明数据写成功了。之后leader会告诉server1数据写成功了。
+    + server1会通知Client数据写成功了。这时就认为整个写操作成功。
+  + **读**
+    + Client向zk集群中的节点发送一个读请求，该节点读取数据后直接返回，因为集群中每个节点看到的数据视图是一样的
 
  
 
