@@ -375,6 +375,8 @@ CAS 操作包含三个操作数 —— 内存位置（V）、预期原值（A）
 
 ### 2.30 java中bio nio aio的区别和联系
 
+[bio nio aio](https://www.sohu.com/a/119086870_505779)
+
 ### 2.31 为什么bio是阻塞的 nio是非阻塞的 nio是模型是什么样的
 
 ### 2.32 Java io的整体架构和使用的设计模式
@@ -432,7 +434,16 @@ CAS 操作包含三个操作数 —— 内存位置（V）、预期原值（A）
 
 ### 2.45 乐观锁和悲观锁的实现
 
++ 乐观锁：CAS
++ 悲观锁：Synchronized| Reentrantlock
+
 ### 2.46 synchronized实现原理
+
+> monitorenter & monitorexit
+
++ 偏向锁
++ 轻量级锁
++ 重量级锁
 
 ### 2.47 你在项目中遇到的困难和怎么解决的
 
@@ -443,6 +454,50 @@ CAS 操作包含三个操作数 —— 内存位置（V）、预期原值（A）
 ### 2.50 生产者消费者代码实现
 
 ### 2.51 死锁代码实现
+
+```java
+public static void main(String[] args) {
+        final Object o1 = new Object();
+        final Object o2 = new Object();
+        Thread t1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                synchronized (o1) {
+                    try {
+                        System.out.println(Thread.currentThread().getName() + "--> o1 get lock");
+                        Thread.sleep(Long.parseLong("2000"));
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    synchronized (o2) {
+                        System.out.println(Thread.currentThread().getName() + "-->>> o2 get lock");
+                    }
+                }
+            }
+        },"deadlock-t1-thread");
+
+        Thread t2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                synchronized (o2) {
+                    try {
+                        System.out.println(Thread.currentThread().getName() + "--> o2 get lock");
+                        Thread.sleep(Long.parseLong("2000"));
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    synchronized (o1) {
+                        System.out.println(Thread.currentThread().getName() + "-->>> o1 get lock");
+                    }
+                }
+            }
+        },"deadlock-t2-thread");
+        t1.start();
+        t2.start();
+    }
+```
+
+
 
 ### 2.52 Future和ListenableFuture 异步回调相关
 
