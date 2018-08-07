@@ -488,6 +488,37 @@ Least Recently Used
 
 ### 3.14 zookeeper相关，节点类型，如何实现服务发现和服务注册
 
++ **节点类型**
+  + PERSISTENT：持久化节点 
+  + PERSISTENT_SEQUENTIAL： 顺序自动编号持久化节点，这种节点会根据当前已存在的节点数自动加 1 
+  + EPHEMERAL：临时节点， 客户端session超时这类节点就会被自动删除 
+  + EPHEMERAL_SEQUENTIAL：临时自动编号节点 
++ **客户端角色和状态**
+  + Leader Follower Observer
+  + Looking Following Leading Observing
++ **选举**
+  + 投票内容（myid，zxid），先比较zxid，再比较myid
+    + zxid是一个64位的数字，低32代表一个单调递增的计数器，高32位代表Leader周期。 
+      + 当有新的Leader产生时，Leader周期epoch加1，计数器从0开始；
+      + 每处理一个事务请求，计数器加1
+    + myid相当于服务器id
+  + 1.服务器初始化时Leader选举 
+    + zookeeper由于其自身的性质，一般建议选取奇数个节点进行搭建分布式服务器集群。以3个节点组成的服务器集群为例，说明服务器初始化时的选举过程。启动第一台安装zookeeper的节点时，无法单独进行选举，启动第二台时，两节点之间进行通信，开始选举Leader。 
+      + 1）每个Server投出一票。他们两都选自己为Leader，投票的内容为（myid，ZXID）。myid即Server的id，安装zookeeper时配置文件中所配置的myid；ZXID，事务id，为节点的更新程度，ZXID越大，代表Server对Znode的操作越新。由于服务器初始化，每个Sever上的Znode为0，所以Server1投的票为（1,0），Server2为（2,0）。两Server将各自投票发给集群中其他机器。 
+      + 2）每个Server接收来自其他Server的投票。集群中的每个Server先判断投票有效性，如检查是不是本轮的投票（逻辑时钟或者投票次数），是不是来Looking状态的服务器投的票。 
+      + 3）对投票结果进行处理。先了解下处理规则。首先对比ZXID。ZXID大的服务器优先作为Leader - 若ZXID相同，比如初始化的时候，每个Server的ZXID都为0，就会比较myid，myid大的选出来做Leader。 对于Server而言，他接受到的投票为（2,0），因为自身的票为（1,0），所以此时它会选举Server2为Leader，将自己的更新为（2,0）。而Server2收到的投票为Server1的（1,0）由于比他自己小，Server2的投票不变。Server1和Server2再次将票投出，投出的票都为（2,0）。 
+      + 4） 统计投票。每次投票之后，服务器都会统计投票信息，如果判定某个Server有过半的票数投它，那么该Server将会作为Leader。对于Server1和Server2而言,统计出已经有两台机器接收了（2,0）的投票信息，此时认为选出了Leader。 
+      + 5）改变服务器状态。当确定了Leader之后，每个Server更新自己的状态，Leader将状态更新为Leading，Follower将状态更新为Following。 
+
+  + 2.服务器运行期间的Leader选举 
+    + zookeeper运行期间，如果有新的Server加入，或者非Leader的Server宕机，那么Leader将会同步数据到新Server或者寻找其他备用Server替代宕机的Server。若Leader宕机，此时集群暂停对外服务，开始在内部选举新的Leader。假设当前集群中有Server1、Server2、Server3三台服务器，Server2为当前集群的Leader，由于意外情况，Server2宕机了，便开始进入选举状态。过程如下 
+      + 1） 变更状态。其他的非Observer服务器将自己的状态改变为Looking，开始进入Leader选举。 
+      + 2） 每个Server发出一个投票（myid，ZXID），由于此集群已经运行过，所以每个Server上的ZXID可能不同。假设Server1的ZXID为145，Server3的为122，第一轮投票中，Server1和Server3都投自己，票分别为（1，145）、（3，122），将自己的票发送给集群中所有机器。 
+      + 3） 每个Server接收接收来自其他Server的投票，降下来的步骤与启动时步骤相同。
++ ZAB协议
+
+ 
+
 ### 3.15 nginx负载均衡相关，让你去实现负载均衡，该怎么实现
 
 ### 3.16 linux命令，awk、cat、sort、cut、grep、uniq、wc、top等
