@@ -473,7 +473,7 @@ Segment继承自ReenTrantLock，所以每个Segment就是个可重入锁，每�
 
 ### 5.2 Throwable
 
-Error 和 Excetpion均继承自Throwable
+Error 和 Exception均继承自Throwable
 
 + Error : 程序无法处理的错误，表示运行应用程序中较严重问题。大多数错误与代码编写者执行的操作无关，而表示代码运行时 JVM（Java 虚拟机）出现的问题。
 
