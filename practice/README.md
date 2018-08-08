@@ -388,12 +388,23 @@ CAS 操作包含三个操作数 —— 内存位置（V）、预期原值（A）
 ### 2.35 http三次握手和四次挥手
 
 
-  + 握手
+  + **三次握手过程：**
 
-    + Client 发起建立连接的请求，数据包Syn.J，状态为SYN_SEND
-    + Server 返回 Syn.K & ACK.J+1，状态SYN_RECV
-    + Client 返回 ACK.K+1，双方状态为ESTABLISHED
-  + 
+
+      + 第一次握手：client发送一个TCP标志位SYN=1、ACK=0的数据包给server，并随机会产生一个Sequence number=3233.当server接收到这个数据后，server由SYN=1可知客户端是想要建立连接；
+      + 第二次握手：server要对客户端的联机请求进行确认，向client发送应答号ACK=1、SYN=1、确认号Acknowledge number=3234，此值是server的序列号加1，还会产生一个随机的序列号Sequence number=36457，这样就告诉client可以进行连接；
+
+
+      + 第三次握手：client收到数据后检查Acknowledge number是否是3233+1的值，以及ACK的值是否为1，若为1，client会发送ACK=1、确认号码Acknowledge number=36457，告诉server，你的请求连接被确认，连接可以建立。
+
+        
+
+  + **四次挥手过程：**
+
+    + 第一次挥手：当传输的数据到达尾部时，client向server发送FIN=1标志位；可理解成，client向server说，我这边的数据传送完成了，我准备断开了连接；
+    + 第二次挥手：因TCP的连接是全双工的双向连接，关闭也是要从两边关闭；当server收到client发来的FIN=1的标志位后，server不会立刻向client发送FIND=1的请求关闭信息，而是先向client发送一个ACK=1的应答信息，表示：你请求关闭的请求我已经收到，但我可能还有数据没有完成传送，你再等下，等我数据传输完成了我就告诉你；
+    + 第三次挥手：server数据传输完成，向client发送FIN=1，client收到请求关闭连接的请求后，client就明白server的数据已传输完成，现在可以断开连接了，
+    + 第四次挥手：client收到FIND=1后，client还是怕由于网络不稳定的原因，怕server不知道他要断开连接，于是向server发送ACK=1确认信息进行确认，把自己设置成TIME_WAIT状态并启动定时器，如果server没有收到ACK，server端TCP的定时器到达后，会要求client重新发送ACK，当server收到ACK后，server就断开连接；当client等待2MLS（2倍报文最大生存时间）后，没有收到server的重传请求后，他就知道server已收到了ACK，所以client此时才关闭自己的连接。
 
 ### 2.36 rpc相关：如何设计一个rpc框架，从io模型 传输协议 序列化方式综合考虑
 
