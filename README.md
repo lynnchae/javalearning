@@ -212,6 +212,18 @@ public static Object newProxyInstance(ClassLoader loader,
    
 #### Spring MVC
 
+```java
+initMultipartResolver(context);
+initLocaleResolver(context);
+initThemeResolver(context);
+initHandlerMappings(context);
+initHandlerAdapters(context);
+initHandlerExceptionResolvers(context);
+initRequestToViewNameTranslator(context);
+initViewResolvers(context);
+initFlashMapManager(context);
+```
+
  + HandlerMapping 定位
     + 遍历容器中所有的bean，(isHandler())找到@Controller 或者 @RequestMapping 注解的bean，处理成HandlerMethod，注册到mappingRegistry
     + HandlerAdapter，为了适配handler并统一返回ModelAndView对象，通过HandlerAdapter调用HandlerMethod
@@ -302,15 +314,11 @@ public static Object newProxyInstance(ClassLoader loader,
 轻量级锁是由偏向锁升级来的，偏向锁运行在一个线程进入同步块的情况下，当第二个线程加入锁争用的时候，偏向锁就会升级为轻量级锁。
 
 [JAVA锁的膨胀过程和优化](https://www.cnblogs.com/dsj2016/p/5714921.html)
-+ 加锁的过程：JVM在当前线程的栈帧中创建用于储存锁记录的空间（LockRecord），然后把MarkWord放进去，
-  同时生成一个叫Owner的指针指向那个被加锁的对象，同时用CAS尝试把对象头的MarkWord替换成一个指向锁记录（LockRecord）的指针。
++ 加锁的过程：JVM在当前线程的栈帧中创建用于储存锁记录的空间（LockRecord），然后把MarkWord放进去，同时生成一个叫Owner的指针指向那个被加锁的对象，用CAS尝试把对象头的MarkWord替换成一个指向锁记录（LockRecord）的指针。
   成功了就拿到了锁。那么失败了呢？
   《深入理解JVM》的说法：失败了，去查看MarkWord的值。有2种可能：1，指向当前线程的指针，2，别的值。
-  - 如果是1，那么说明发生了“重入”的情况，直接当做成功获得锁处理。
-    其实这个有个疑问，为什么获得锁成功了而CAS失败了，这里其实要牵扯到CAS的具体过程：先比较某个值是不是预测的值，
-    是的话就动用原子操作交换（或赋值），否则不操作直接返回失败。在用CAS的时候期待的值是其原本的MarkWord。
-    发生“重入”的时候会发现其值不是期待的原本的MarkWord，而是一个指针，所以当然就返回失败，但是如果这个指针指向这个线程，
-    那么说明其实已经获得了锁，不过是再进入一次。
+  - 如果是1，那么说明发生了“重入”的情况，直接当做成功获得锁处理。其实这个有个疑问，为什么获得锁成功了而CAS失败了，这里其实要牵扯到CAS的具体过程：先比较某个值是不是预测的值，是的话就动用原子操作交换（或赋值），否则不操作直接返回失败。在用CAS的时候期待的值是其原本的MarkWord。
+    发生“重入”的时候会发现其值不是期待的原本的MarkWord，而是一个指针，所以当然就返回失败，但是如果这个指针指向这个线程，那么说明其实已经获得了锁，不过是再进入一次。
 
    - 如果是2，那么发生了竞争，锁会膨胀为一个重量级锁（MutexLock）
 
@@ -332,8 +340,6 @@ public static Object newProxyInstance(ClassLoader loader,
 *  **减少锁的粒度**
 
 它的思想是将物理上的一个锁，拆成逻辑上的多个锁，增加并行度，从而降低锁竞争。它的思想也是用空间来换时间；
-
-> 
 
 `ConcurrentHashMap`
 
@@ -372,7 +378,7 @@ Segment继承自ReenTrantLock，所以每个Segment就是个可重入锁，每�
 
 > 如果需要同步的操作执行速度非常快，并且线程竞争并不激烈，这时候使用cas效率会更高，
   因为加锁会导致线程的上下文切换，如果上下文切换的耗时比同步操作本身更耗时，且线程对资源的竞争不激烈，
-  使用volatiled+cas操作会是非常高效的选择；
+  使用volatile+cas操作会是非常高效的选择；
 
 * **消除缓存行的伪共享**
 
@@ -396,9 +402,11 @@ Segment继承自ReenTrantLock，所以每个Segment就是个可重入锁，每�
 
 ### 4.1 B-tree & B+tree
 
+[漫画B+树](https://www.sohu.com/a/156886901_479559)
+
 **B+树和B树相比，主要的不同点在以下3项：**
 
-+ 内部节点中，关键字的个数与其子树的个数相同，不像B树种，子树的个数总比关键字个数多1个。
++ 内部节点中，关键字的个数与其子树的个数相同，不像B树，子树的个数总比关键字个数多1个。
 + 所有指向文件的关键字及其指针都在叶子节点中，不像B树，有的指向文件的关键字是在内部节点中。
   换句话说，B+树中，内部节点仅仅起到索引的作用。
 + 在搜索过程中，如果查询和内部节点的关键字一致，那么搜索过程不停止，而是继续向下搜索这个分支。
@@ -444,8 +452,8 @@ Segment继承自ReenTrantLock，所以每个Segment就是个可重入锁，每�
 #### 3. MySql **Lock** & **Transaction**
 
   > InnoDB行锁是通过给索引上的索引项加锁来实现的，这一点MySQL与Oracle不同，
-    后者是通过在数据块中，对相应数据行加锁来实现的。InnoDB这种行锁实现特点意味着：
-    只有通过索引条件检索数据，InnoDB才使用行级锁，否则InnoDB将使用表锁，在实际开发中应当注意。
+  后者是通过在数据块中，对相应数据行加锁来实现的。InnoDB这种行锁实现特点意味着：
+  只有通过索引条件检索数据，InnoDB才使用行级锁，否则InnoDB将使用表锁，在实际开发中应当注意。
 
 共享锁又称为读锁，简称S锁，共享锁就是多个事务对于同一数据可以共享一把锁，都能访问到数据，但是只能读不能修改。
 
