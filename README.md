@@ -212,6 +212,8 @@ public static Object newProxyInstance(ClassLoader loader,
    
 #### Spring MVC
 
++ 通过 `org.springframework.web.servlet.FrameworkServlet.ContextRefreshListener` 监听`ContextRefreshedEvent` 调用 `org.springframework.web.servlet.DispatcherServlet#onRefresh` 初始化以下内容
+
 ```java
 initMultipartResolver(context);
 initLocaleResolver(context);
