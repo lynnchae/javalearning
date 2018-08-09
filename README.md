@@ -20,11 +20,11 @@
     适配器模式的意义是将一个接口转变成另一个接口，通过改变接口达到重复使用的目的；
     而装饰器模式不是要改变被装饰对象的接口，而恰恰要保持原有的接口，但增强原有对象的功能，
     或者改变原有对象的处理方法而提高性能。
- 
+
 
 
 ### 1.5 Proxy
-        
+
 ```java
 public static Object newProxyInstance(ClassLoader loader,
                   Class<?>[] interfaces,
@@ -104,7 +104,7 @@ public static Object newProxyInstance(ClassLoader loader,
 
 ### 1.7 SnowFlake
  > Twitter分布式自增id算法(64位)
- 
+
 |正数|当前时间戳 - 开始时间戳（41位）|数据中心标识（5位）|机器标识（5位）|自增序列（12位）|
 |:-----|:-----|:-----|:-----|:-----|
 |0| 0000000000 0000000000 0000000000 0000000000 0 | 00000 | 00000 | 000000000000|
@@ -130,25 +130,25 @@ public static Object newProxyInstance(ClassLoader loader,
 ### 2.3 filters
 
 >  通过匿名内部类创建FilterChain，并对匿名内部类有个深入的理解
-    
+
 >  外部类方法中传入匿名内部类的变量，匿名内部类实际上持有了该变量的一个拷贝，如果对此拷贝进行改变，
    不会反应到方法中，而对于开发者而言，看到的是同一个对象，所以不能保持同步修改，故方法中的变量需要定义为final.
-      
 
-      
+
+​      
 ### 2.4 spring mvc 2.0
 
 >  实现springMVC定位、加载、注册过程
-    
->  实现handlerAdapter,HandlerMapping,Aop,DispatchServlet...
-    
->  可以通过url进行访问
-  
 
-       
+>  实现handlerAdapter,HandlerMapping,Aop,DispatchServlet...
+
+>  可以通过url进行访问
+
+
+​       
 ### 2.5 aop拦截
-      
-      
+
+
 ```Java
   protected Object invokeJoinpoint() throws Throwable {
       return AopUtils.invokeJoinpointUsingReflection(this.target, this.method, this.arguments);
@@ -158,22 +158,22 @@ public static Object newProxyInstance(ClassLoader loader,
     invokeJoinpoint()中传递的对象为目标对象，而不是被aop代理过的对象，即this.target
     调用b()方法时，并没有过代理对象来执行，所以无法拦截。如果需要在a()方法中调用b()方法，并且对b()进行拦截，
     则需要获取到Service类的代理对象来进行调用，((Service)AopContext.currentProxy()) -> b()
-        
-  > <aop:config expose-proxy="true" proxy-target-class="false"></aop:config>
+
+  > <aop:config expose-proxy="true" proxy-target-class="false"/>
     需要配置此项，暴露代理对象，实现线程内共享，使用ThreadLocal模式
-        
+
   > AbstractAutoProxyCreator实现了BeanPostProcessor接口，spring容器初始化bean后，调用postProcessAfterInitialization
     对bean进行wrapIfNecessary，创建一个aop的proxy对象。
-    
+
        ProxyFactory -> aopProxy -> getProxy
                                     <- JDKDynamicAopProxy
                                     <- CglibAopProxy
        ProxyFactory保存了aop拦截的配置信息                    
-     
+
   > AbstractAutoProxyCreator实现了Ordered接口，并将期顺序设置为Ordered.LOWEST_PRECEDENCE，最低优先级
     保证aop后置处理器最后调用
 
-   
+
 ### 2.6 Bean的初始化扩展方法
 
 ***init-method，afterPropertiesSet和BeanPostProcessor***
@@ -193,21 +193,21 @@ public static Object newProxyInstance(ClassLoader loader,
     那么当ApplicationContext实例化singleton Abean时，
     必须确保上述singleton Abean所依赖所有bean也被预先初始化，包括设置为lazy-init的Bbean,
     这种情况也符合延时加载的bean在第一次调用时才被实例化的规则。
-  
+
 ### 2.7 Spring Annotation 
 
 #### @Component 注解的“派生”
 
   > `@Controller`  `@Service`  `@Repository`均为`@Component`注解的派生，类似注解的继承关系
-  
+
 #### @Resource & @Autowire
 
  + @Resource默认是按照名称来装配注入的，只有当找不到与名称匹配的bean才会按照类型来装配注入；
 
  + @Autowired默认是按照类型装配注入的，如果想按照名称来转配注入，则需要结合@Qualifier一起使用；
- 
+
  + @Resource注解是又J2EE提供，而@Autowired是由Spring提供，故减少系统对spring的依赖建议使用@Resource的方式；
- 
+
  + @Resource和@Autowired都可以书写标注在字段或者该字段的setter方法之上
    
 #### Spring MVC
@@ -218,13 +218,23 @@ public static Object newProxyInstance(ClassLoader loader,
   ```java
     ModelAndView handle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception;
   ```
-   
+
++ mappingRegistry
+  + registry(HashMap)
+    + <RequestMappingInfo, MappingRegistration>
+      + `MappingRegistration`
+        + mapping
+        + handlerMethod
+  + mappingLookup
+  + urlLookup
+  + nameLookup
+
 ---
-  
+
 ## 3. Concurrent
 
 ### 3.1 先++  后++
-    
+
    +  先++：先运算，后使用
    
    +  后++：先使用，后运算
@@ -237,7 +247,7 @@ public static Object newProxyInstance(ClassLoader loader,
     System.out.println(names[++index]);//输出lily
 ```
 
-  
+
 ### 3.2 Lock
 
 + 自旋锁: 
@@ -245,7 +255,7 @@ public static Object newProxyInstance(ClassLoader loader,
      自旋锁适用于锁使用者保持锁时间比较短的情况
 
 + 互斥锁：
-    
+  
    > 目的和自旋锁一样，但机制不一样，当线程占用资源后，加上锁，后者线程访问时，由于资源被占有，转入休眠(sleep)状态，等资源被释放后，通过信号量通知排队等候的线程。
 
       自旋锁是指锁的实现方式
@@ -255,25 +265,25 @@ public static Object newProxyInstance(ClassLoader loader,
 
 >   
     同一个线程，外层方法获取锁后，内层方法仍有获得该锁的代码，不受影响。
-    
+
     如果某个线程试图获取一个已经由它自己持有的锁时，那么这个请求会立刻成功，并且会将这个锁的计数值加1，
     而当线程退出同步代码块时，计数器将会递减，当计数值等于0时，锁释放。
-    
+
 ### 3.3 JVM内置锁的膨胀
-    
+
    >[简书：浅谈偏向锁、轻量级锁、重量级锁](https://www.jianshu.com/p/36eedeb3f912)
-   
+
    >[CSDN：java 中的锁 -- 偏向锁、轻量级锁、自旋锁、重量级锁](https://blog.csdn.net/zqz_zqz/article/details/70233767)
 
     偏向锁 -> 轻量级锁 -> 重量级锁  
 + JDK1.5开始，引入了轻量锁与偏向锁，默认启用了自旋锁，这些都属于乐观锁
 + JDK1.6引入自适应自旋锁， -XX:+UseSpinning开启； -XX:PreBlockSpin=10 为自旋次数； 
 + JDK1.7后，去掉此参数，由jvm控制；
+  
     
-    
-    
+  
 > mark word
-    
+
 |状态|标志位|存储内容|
 |:-----|:-----|:-----|
 |未锁定|01|	对象哈希码、对象分代年龄，是否可偏向锁0|
@@ -396,7 +406,7 @@ Segment继承自ReenTrantLock，所以每个Segment就是个可重入锁，每�
 #### B+tree 优势
 
 > B+树的磁盘读写代价更低
-     
+
     B+树的内部结点并没有指向关键字具体信息的指针。
     因此其内部结点相对B树更小。如果把所有同一内部结点的关键字存放在同一盘块中，
     那么盘块所能容纳的关键字数量也越多。一次性读入内存中的需要查找的关键字也就越多。
@@ -413,11 +423,11 @@ Segment继承自ReenTrantLock，所以每个Segment就是个可重入锁，每�
     B树在提高了磁盘IO性能的同时并没有解决元素遍历的效率低下的问题，
     而B+树只需要遍历叶子节点就可以解决对全部关键字信息的扫描，
     所以对于数据库中频繁使用的range query，B+树有着更高的性能。
-    
+
 ### 4.2 MySql
 
 #### 1. MyISAM （非聚集索引）
-        
+
    + MyISAM引擎使用B+Tree作为索引结构，叶结点的data域存放的是数据记录的地址
     
    + MyISAM索引文件和数据文件是分离的，索引文件仅保存数据记录的地址
@@ -436,12 +446,12 @@ Segment继承自ReenTrantLock，所以每个Segment就是个可重入锁，每�
   > InnoDB行锁是通过给索引上的索引项加锁来实现的，这一点MySQL与Oracle不同，
     后者是通过在数据块中，对相应数据行加锁来实现的。InnoDB这种行锁实现特点意味着：
     只有通过索引条件检索数据，InnoDB才使用行级锁，否则InnoDB将使用表锁，在实际开发中应当注意。
-  
+
 共享锁又称为读锁，简称S锁，共享锁就是多个事务对于同一数据可以共享一把锁，都能访问到数据，但是只能读不能修改。
-  
+
 排他锁又称为写锁，简称X锁，排他锁就是不能与其他所并存，如一个事务获取了一个数据行的排他锁，
    其他事务就不能再获取该行的其他锁，包括共享锁和排他锁，但是获取排他锁的事务是可以对数据就行读取和修改。
- 
+
 #### 4.事务（原子性、一致性、隔离性、持久性）隔离级别
    1. 脏读：在一个事务处理过程里读取了另一个未提交的事务中的数据。
    
@@ -453,7 +463,7 @@ Segment继承自ReenTrantLock，所以每个Segment就是个可重入锁，每�
       这时事务T2又对这个表中插入了一行数据项，而这个数据项的数值还是为“1”并且提交给数据库。
       而操作事务T1的用户如果再查看刚刚修改的数据，会发现还有一行没有修改，
       其实这行是从事务T2中添加的，就好像产生幻觉一样，这就是发生了幻读。
-    
+
    ① Serializable (串行化)：可避免脏读、不可重复读、幻读的发生。
     
    ② Repeatable read (可重复读)：可避免脏读、不可重复读的发生。（Mysql默认隔离级别）
@@ -461,15 +471,15 @@ Segment继承自ReenTrantLock，所以每个Segment就是个可重入锁，每�
    ③ Read committed (读已提交)：可避免脏读的发生。
     
    ④ Read uncommitted (读未提交)：最低级别，任何情况都无法保证。
-   
+
 ## 5. JDK
 
 ### 5.1 ConcurrentHashMap
 
    > 1.7 采用(Segment extends ReentrantLock)[] + HashEntry[] 的分段锁技术来实现同步
-   
+
    > 1.8 采用Synchronized & CAS 来实现并发同步，并且使用与HashMap相同的数据结构 **Node数组 + 链表 + 红黑树**
-   
+
 
 ### 5.2 Throwable
 
@@ -532,7 +542,7 @@ Error 和 Exception均继承自Throwable
 > 浅拷贝是按位拷贝对象，它会创建一个新对象，这个对象有着原始对象属性值的一份精确拷贝。
 如果属性是基本类型，拷贝的就是基本类型的值；
 如果属性是内存地址（引用类型），拷贝的就是内存地址 ，因此如果其中一个对象改变了这个地址，就会影响到另一个对象。
- 
+
  **深拷贝**
 > 深拷贝会拷贝所有的属性，并拷贝属性指向的动态分配的内存。当对象和它所引用的对象一起拷贝时即发生深拷贝。
 
@@ -556,4 +566,3 @@ Error 和 Exception均继承自Throwable
 |FailSafe|失败安全，出现异常时，直接忽略，通常用于写入审计日志等操作|调用信息丢失|
 |Forking|并行调用多个服务器，只要一个成功即返回，通常用于实时性要求较高的读操作|需要浪费更多服务资源|
 |Broadcast|广播调用所有提供者，逐个调用，任意一台报错则报错，通常用于更新提供方本地状态|速度慢，任意一台报错则报错|
-    
