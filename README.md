@@ -558,6 +558,15 @@ Error 和 Exception均继承自Throwable
 
 + 通过序列化、反序列化方式实现对象的深拷贝
 + transient属性无法实现拷贝
+
+
+### 5.7 CountDownLatch
+
++ 通过内部类Sync extends AbstractQueueSynchronizer共享锁实现
++ countDownLatch.await()，进入线程等待队列，假设t1，t2进入
+  + head -> t1 -> t2(tail)
++ countDown() 将 state-1，直到state=0时，准备释放共享锁，唤醒head节点next节点中的线程，`AbstractQueuedSynchronizer#releaseShared()` -> `AbstractQueuedSynchronizer#doReleaseShared()`->`unparkSuccessor()`，将t1设置为队列head节点，并将头节点thread设置为null，唤醒t1，t2.await()自旋获取共享锁成功后，head.next.thread.unpark()唤醒线程t2
+
 ## 6. Distribution System
 
 ### 6.1 CAP 
