@@ -567,6 +567,10 @@ Error 和 Exception均继承自Throwable
   + head -> t1 -> t2(tail)
 + countDown() 将 state-1，直到state=0时，准备释放共享锁，唤醒head节点next节点中的线程，`AbstractQueuedSynchronizer#releaseShared()` -> `AbstractQueuedSynchronizer#doReleaseShared()`->`unparkSuccessor()`，将t1设置为队列head节点，并将头节点thread设置为null，唤醒t1，t2.await()自旋获取共享锁成功后，head.next.thread.unpark()唤醒线程t2
 
+### 5.8 CyclicBarrier
+
++ 通过ReentrantLock排他锁 & Condition实现
+
 ## 6. Distribution System
 
 ### 6.1 CAP 
