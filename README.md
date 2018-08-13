@@ -570,6 +570,33 @@ Error 和 Exception均继承自Throwable
 ### 5.8 CyclicBarrier
 
 + 通过ReentrantLock排他锁 & Condition实现
++ CyclicBarrier.await()，进入Condition条件队列，线程阻塞
++ 等到所有线程都到达屏障，count为0，Condition.signalAll
+```java
+        //java.util.concurrent.locks.AbstractQueuedSynchronizer.ConditionObject
+        public final void await() throws InterruptedException {
+            if (Thread.interrupted())
+                throw new InterruptedException();
+            //创建新节点，添加到条件队列
+            Node node = addConditionWaiter();
+            //释放锁
+            int savedState = fullyRelease(node);
+            int interruptMode = 0;
+            //如果不是在获取锁的阻塞队列中，阻塞当前线程
+            while (!isOnSyncQueue(node)) {
+                LockSupport.park(this);
+                if ((interruptMode = checkInterruptWhileWaiting(node)) != 0)
+                    break;
+            }
+            //尝试获取锁
+            if (acquireQueued(node, savedState) && interruptMode != THROW_IE)
+                interruptMode = REINTERRUPT;
+            if (node.nextWaiter != null) // clean up if cancelled
+                unlinkCancelledWaiters();
+            if (interruptMode != 0)
+                reportInterruptAfterWait(interruptMode);
+        }
+```
 
 ## 6. Distribution System
 
