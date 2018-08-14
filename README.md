@@ -604,6 +604,16 @@ Error 和 Exception均继承自Throwable
 + 或（|）：有1出1
 + 异或（^）：值不同为1
 
+```java
+
+    int i = 11;
+    System.out.println(Integer.toBinaryString(11));
+    System.out.println(Integer.toBinaryString(7));
+    //11对8取余数，只需要跟（ 11 & 2^3-1） 与运算即可
+    System.out.println(11 & 7);
+    
+```
+
 ## 6. Distribution System
 
 ### 6.1 CAP 
