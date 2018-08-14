@@ -598,6 +598,12 @@ Error 和 Exception均继承自Throwable
         }
 ```
 
+### 5.9位运算
+
++ 与（&）：全1出1
++ 或（|）：有1出1
++ 异或（^）：值不同为1
+
 ## 6. Distribution System
 
 ### 6.1 CAP 
