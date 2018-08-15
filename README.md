@@ -611,6 +611,8 @@ Error 和 Exception均继承自Throwable
     System.out.println(Integer.toBinaryString(7));
     //11对8取余数，只需要跟（ 11 & 2^3-1） 与运算即可
     System.out.println(11 & 7);
+    //获取2^3-1位运算
+    System.out.println(~(-1 << 3));
     
 ```
 
