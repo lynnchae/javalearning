@@ -210,7 +210,7 @@ public static Object newProxyInstance(ClassLoader loader,
 
  + @Resource和@Autowired都可以书写标注在字段或者该字段的setter方法之上
    
-#### Spring MVC
+### 2.8 Spring MVC
 
 + 通过 `org.springframework.web.servlet.FrameworkServlet.ContextRefreshListener` 监听`ContextRefreshedEvent` 调用 `org.springframework.web.servlet.DispatcherServlet#onRefresh` 初始化以下内容
 
@@ -243,6 +243,13 @@ initFlashMapManager(context);
   + urlLookup
   + nameLookup
 
+
+### 2.9 Spring Transaction
++ `@Configuration` ProxyTransactionManagementConfiguration
+  + 自动装配配置类 ProxyTransactionManagementConfiguration，这个类首先注入了AnnotationTransactionAttributeSource，用来读取解析 @Transactional注解，获取需要进行事务管理的方法，并将相关的事务管理配置的参数暴露给Spring。
+  + 注入TransactionInterceptor：基于AOP MethodInterceptor (Advice)实现的声明式事务管理，内部依赖于TransactionManager，TransactionManager是实际的事务管理对象。
+  + 注入BeanFactoryTransactionAttributeSourceAdvisor：由AnnotationTransactionAttributeSource驱动的AOP Advisor，用于为@Transactional注解的方法添加一个事务advice通知
++ 解析标签 `<tx:annotation-driven/>`，org.springframework.transaction.config.AnnotationDrivenBeanDefinitionParser.AopAutoProxyConfigurer#**configureAutoProxyCreator** 将**AnnotationTransactionAttributeSource**、**BeanFactoryTransactionAttributeSourceAdvisor**解析为BeanDefinition注册到容器中，初始化**BeanFactoryTransactionAttributeSourceAdvisor**时，会将**AnnotationTransactionAttributeSource**初始化并进行注入
 ---
 
 ## 3. Concurrent
