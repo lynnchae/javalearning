@@ -538,7 +538,9 @@ Error 和 Exception均继承自Throwable
 #### Collection：单列集合的根接口
 + List：元素有序  可重复 
   + ArrayList：类似一个长度可变的数组 。适合查询，不适合增删
+    + ArrayList实现了RandomAccess接口，使用for循环遍历比iterator效率高
   + LinkedList：底层是双向循环链表。适合增删，不适合查询。
+    + 遍历效率与linkedlist相反，使用iterator效率高
 + Set：元素无序，不可重复
   + HashSet：根据对象的哈希值确定元素在集合中的位置
   + TreeSet: 以二叉树的方式存储元素，实现了对集合中的元素排序

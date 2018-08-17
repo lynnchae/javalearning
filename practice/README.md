@@ -320,10 +320,15 @@ CAS 操作包含三个操作数 —— 内存位置（V）、预期原值（A）
   + 复制算法
   + 标记-整理算法
   + 分代回收算法
+
 + 垃圾回收器
   +  **新生代收集器**：Serial、ParNew、Paralle Scavenge
-  + **老年代收集器**：Serial Old、Paralle Old、CMS（ConcurrentMarkSweep）
-  + **整堆收集器**：G1
+  +  **老年代收集器**：Serial Old、Paralle Old、CMS（ConcurrentMarkSweep）
+  +  **整堆收集器**：G1
+
+  > 并行（parallel）：指多条垃圾收集线程并行工作，但此时用户线程仍然处于等待状态。
+  >
+  > 并发（Concurrent）：指用户线程与垃圾收集线程同时执行（但不一定是并行的，可能会交替进行），用户程序在继续镜像，而垃圾收集程序运行于另一个CPU上。
 
 ### 2.22 jvm参数的设置和jvm调优
 
