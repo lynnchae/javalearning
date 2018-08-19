@@ -629,17 +629,26 @@ Error 和 Exception均继承自Throwable
 
 **ThreadPoolExecutor构造参数**
 + corePoolSize：核心线程数，如果运行的线程少于corePoolSize，则创建新线程来执行新任务，即使线程池中的其他线程是空闲的
-+ maximumPoolSize:最大线程数，可允许创建的线程数，corePoolSize和maximumPoolSize设置的边界自动调整池大小：
-+ corePoolSize <运行的线程数< maximumPoolSize:仅当队列满时才创建新线程
- corePoolSize=运行的线程数= maximumPoolSize：创建固定大小的线程池
-+ keepAliveTime:如果线程数多于corePoolSize,则这些多余的线程的空闲时间超过keepAliveTime时将被终止
+
++ maximumPoolSize：最大线程数，可允许创建的线程数，corePoolSize和maximumPoolSize设置的边界自动调整池大小：
+
++ corePoolSize <运行的线程数< maximumPoolSize：仅当队列满时才创建新线程
+   corePoolSize=运行的线程数= maximumPoolSize：创建固定大小的线程池
+
++ keepAliveTime：如果线程数多于corePoolSize,则这些多余的线程没有运行任何任务，在等待keepAliveTime时间后，这个线程将会被销毁，直到线程池的线程数量重新达到corePoolSize。
+
 + unit:keepAliveTime参数的时间单位
-+ workQueue:保存任务的阻塞队列，与线程池的大小有关：
+
++ workQueue：保存任务的阻塞队列，与线程池的大小有关：
    当运行的线程数少于corePoolSize时，在有新任务时直接创建新线程来执行任务而无需再进队列
    当运行的线程数等于或多于corePoolSize，在有新任务添加时则选加入队列，不直接创建线程
    当队列满时，在有新任务时就创建新线程
-+ threadFactory:使用ThreadFactory创建新线程，默认使用defaultThreadFactory创建线程
-+ handle:定义处理被拒绝任务的策略，默认使用ThreadPoolExecutor.AbortPolicy,任务被拒绝时将抛出RejectExecutorException
+
++ threadFactory：使用ThreadFactory创建新线程，默认使用defaultThreadFactory创建线程
+
++ handle：定义处理被拒绝任务的策略，默认使用ThreadPoolExecutor.AbortPolicy,任务被拒绝时将抛出RejectExecutorException
+
+    
 
 ## 6. Distribution System
 
