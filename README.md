@@ -660,7 +660,7 @@ Error 和 Exception均继承自Throwable
         private static final long serialVersionUID = 6138294804551838833L;
 
         /** Thread this worker is running in.  Null if factory fails. */
-        //execute()或者submit()时，调用addWorder方法，new Worker()，然后调用Worker.thread.start()
+        //execute()或者submit()时，调用addWorker方法，new Worker()，然后调用Worker.thread.start()
         final Thread thread;
         /** Initial task to run.  Possibly null. */
         //getTask()获取task，即—> while (task != null || (task = getTask()) != null)
