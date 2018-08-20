@@ -628,12 +628,13 @@ Error 和 Exception均继承自Throwable
 ### 5.10 Executors and ThreadPoolExecutor
 
 **ThreadPoolExecutor构造参数**
-+ corePoolSize：核心线程数，如果运行的线程少于corePoolSize，则创建新线程来执行新任务，即使线程池中的其他线程是空闲的
++ corePoolSize：核心线程数，如果运行的线程少于corePoolSize，则创建新线程来执行新任务。
+  corePoolSize <运行的线程数< maximumPoolSize：仅当队列满时才创建新线程
+  corePoolSize=运行的线程数= maximumPoolSize：创建固定大小的线程池
 
-+ maximumPoolSize：最大线程数，可允许创建的线程数，corePoolSize和maximumPoolSize设置的边界自动调整池大小：
-
-+ corePoolSize <运行的线程数< maximumPoolSize：仅当队列满时才创建新线程
-   corePoolSize=运行的线程数= maximumPoolSize：创建固定大小的线程池
+> 在刚刚创建ThreadPoolExecutor的时候，线程并不会立即启动，而是要等到有任务提交时才会启动，除非调用了prestartCoreThread/prestartAllCoreThreads事先启动核心线程
+  
++ maximumPoolSize：最大线程数，可允许创建的线程数，corePoolSize和maximumPoolSize设置的边界自动调整池大小
 
 + keepAliveTime：如果线程数多于corePoolSize,则这些多余的线程没有运行任何任务，在等待keepAliveTime时间后，这个线程将会被销毁，直到线程池的线程数量重新达到corePoolSize。
 
