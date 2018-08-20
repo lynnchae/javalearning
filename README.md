@@ -648,7 +648,28 @@ Error 和 Exception均继承自Throwable
 
 + handle：定义处理被拒绝任务的策略，默认使用ThreadPoolExecutor.AbortPolicy,任务被拒绝时将抛出RejectExecutorException
 
-    
+```java
+    //线程池中均为ThreadPoolExecutor.Worker对象
+    private final class Worker
+        extends AbstractQueuedSynchronizer
+        implements Runnable{
+        /**
+         * This class will never be serialized, but we provide a
+         * serialVersionUID to suppress a javac warning.
+         */
+        private static final long serialVersionUID = 6138294804551838833L;
+
+        /** Thread this worker is running in.  Null if factory fails. */
+        //execute()或者submit()时，调用addWorder方法，new Worker()，然后调用Worker.thread.start()
+        final Thread thread;
+        /** Initial task to run.  Possibly null. */
+        //getTask()获取task，即—> while (task != null || (task = getTask()) != null)
+        //调用task.run()
+        Runnable firstTask;
+        /** Per-thread task counter */
+        volatile long completedTasks;
+    }
+``` 
 
 ## 6. Distribution System
 
