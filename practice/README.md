@@ -167,7 +167,7 @@
 
 + ReentrantLock依赖于jdk的实现，而Synchronized依赖于jvm实现
 + ReenTrantLock可以指定是公平锁还是非公平锁。而synchronized只能是非公平锁。 
-+ ReenTrantLock提供了一个Condition（条件）类，用来实现分组唤醒需要唤醒的线程们，而不是像synchronized要么随机唤醒一个线程要么唤醒全部z线程。
++ ReenTrantLock提供了一个Condition（条件）类，用来实现分组唤醒需要唤醒的线程们，而不是像synchronized要么随机唤醒一个线程要么唤醒全部线程。
 + ReenTrantLock提供了一种能够中断等待锁的线程的机制，通过lock.lockInterruptibly()来实现这个机制。
 
 ### 2.13 CAS的实现原理以及问题
@@ -444,12 +444,11 @@ CAS 操作包含三个操作数 —— 内存位置（V）、预期原值（A）
 
   + **三次握手过程：**
 
+    + 第一次握手：client发送一个TCP标志位SYN=1、ACK=0的数据包给server，并随机会产生一个Sequence number=3233.当server接收到这个数据后，server由SYN=1可知客户端是想要建立连接；
 
-      + 第一次握手：client发送一个TCP标志位SYN=1、ACK=0的数据包给server，并随机会产生一个Sequence number=3233.当server接收到这个数据后，server由SYN=1可知客户端是想要建立连接；
-      + 第二次握手：server要对客户端的联机请求进行确认，向client发送应答号ACK=1、SYN=1、确认号Acknowledge number=3234，此值是server的序列号加1，还会产生一个随机的序列号Sequence number=36457，这样就告诉client可以进行连接；
+    + 第二次握手：server要对客户端的联机请求进行确认，向client发送应答号ACK=1、SYN=1、确认号Acknowledge number=3234，此值是server的序列号加1，还会产生一个随机的序列号Sequence number=36457，这样就告诉client可以进行连接；
 
-
-      + 第三次握手：client收到数据后检查Acknowledge number是否是3233+1的值，以及ACK的值是否为1，若为1，client会发送ACK=1、确认号码Acknowledge number=36457，告诉server，你的请求连接被确认，连接可以建立。
+    + 第三次握手：client收到数据后检查Acknowledge number是否是3233+1的值，以及ACK的值是否为1，若为1，client会发送ACK=1、确认号码Acknowledge number=36457，告诉server，你的请求连接被确认，连接可以建立。
 
 
 ​        
