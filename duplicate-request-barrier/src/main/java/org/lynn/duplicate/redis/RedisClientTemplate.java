@@ -227,6 +227,25 @@ public class RedisClientTemplate {
         }
     }
 
+    public Long bitcount(String key) {
+        ShardedJedis shardedJedis = this.redisDataSource.getRedisClient();
+        Long result = 0L;
+        if (shardedJedis == null) {
+            return result;
+        } else {
+            boolean broken = false;
+            try {
+                result = shardedJedis.bitcount(key);
+            } catch (Exception var11) {
+                log.error(var11.getMessage(), var11);
+                broken = true;
+            } finally {
+                this.redisDataSource.returnResource(shardedJedis, broken);
+            }
+            return result;
+        }
+    }
+
     public long setrange(String key, long offset, String value) {
         ShardedJedis shardedJedis = this.redisDataSource.getRedisClient();
         long result = 0L;
