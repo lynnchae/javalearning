@@ -18,6 +18,7 @@
 
     <properties>
         <spring-framework.version>4.3.18.RELEASE</spring-framework.version>
+        <org.apache.curator.version>2.10.0</org.apache.curator.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -189,9 +190,23 @@
             <dependency>
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
-                <version>26.0-jre</version>
+                <version>15.0</version>
             </dependency>
-
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-recipes</artifactId>
+                <version>${org.apache.curator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-framework</artifactId>
+                <version>${org.apache.curator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>1.2.47</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>

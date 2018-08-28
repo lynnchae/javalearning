@@ -672,6 +672,10 @@ Error 和 Exception均继承自Throwable
     }
 ``` 
 
+### 5.11 重载
+
++ jdk通过对方法名+形参列表作为方法签名的唯一性判断，与返回值类型无关
+
 ## 6. Distribution System
 
 ### 6.1 CAP 
