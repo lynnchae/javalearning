@@ -2,13 +2,44 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+       xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit.xsd">
 
-    <!--<bean id="initBean" class="org.lynn.InitBean" init-method="initMethod"/>-->
+    <description>Spring公共配置</description>
+    <context:component-scan base-package="org.lynn"></context:component-scan>
+
+    <!--配置connection-factory，指定连接rabbit server参数 -->
+    <rabbit:connection-factory id="connectionFactory"
+                               host="127.0.0.1" port="5672" username="guest"
+                               password="guest" channel-cache-size="200"
+                               publisher-returns="true" publisher-confirms="false"/>
+
+    <!--通过指定下面的admin信息，当前producer中的exchange和queue会在rabbitmq服务器上自动生成 -->
+    <rabbit:admin connection-factory="connectionFactory"/>
+
+    <rabbit:template id="rabbitmqTemplate" mandatory="true" connection-factory="connectionFactory" exchange="org.lynn.test"/>
 
 
-    <context:component-scan base-package="org.lynn.event"></context:component-scan>
+    <!--定义queue  说明：durable:是否持久化 exclusive: 仅创建者可以使用的私有队列，断开后自动删除 auto_delete: 当所有消费客户端连接断开后，是否自动删除队列-->
+    <rabbit:queue name="test.lynn.queue" durable="true" auto-delete="false"/>
+    <!--定义topic-exchange -->
+    <rabbit:fanout-exchange name="org.lynn.test"
+                            durable="true" auto-delete="false">
+        <rabbit:bindings>
+            <rabbit:binding queue="test.lynn.queue"></rabbit:binding>
+        </rabbit:bindings>
+    </rabbit:fanout-exchange>
 
+
+    <!-- 消息接收者 -->
+
+    <!--<bean id="qwerConsumer" class="com.demo.action.QwerConsumer"></bean>-->
+    <!--&lt;!&ndash; queue litener 观察 监听模式 当有消息到达时会通知监听在对应的队列上的监听对象 &ndash;&gt;-->
+    <!--<rabbit:listener-container connection-factory="connectionFactory" >-->
+    <!--<rabbit:listener  queues="mq.asdf"  ref="asdfConsumer"/>-->
+    <!--</rabbit:listener-container>-->
 
 
 </beans>
