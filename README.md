@@ -703,3 +703,5 @@ Error 和 Exception均继承自Throwable
 + 发送端消息的可靠投递：事务、Publisher Confirm模式
 + Exchange -> Queue：消息持久化 + 镜像队列
 + 消费端消息的消费：ack机制+requeue或者放到死信队列中
+
+> ReturnCallBack只有在mandatory设置为true时生效
