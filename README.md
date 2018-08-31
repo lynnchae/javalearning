@@ -135,7 +135,7 @@ public static Object newProxyInstance(ClassLoader loader,
    不会反应到方法中，而对于开发者而言，看到的是同一个对象，所以不能保持同步修改，故方法中的变量需要定义为final.
 
 
-​      
+      
 ### 2.4 spring mvc 2.0
 
 >  实现springMVC定位、加载、注册过程
@@ -145,7 +145,7 @@ public static Object newProxyInstance(ClassLoader loader,
 >  可以通过url进行访问
 
 
-​       
+       
 ### 2.5 aop拦截
 
 
@@ -633,7 +633,7 @@ Error 和 Exception均继承自Throwable
   corePoolSize=运行的线程数= maximumPoolSize：创建固定大小的线程池
 
 > 在刚刚创建ThreadPoolExecutor的时候，线程并不会立即启动，而是要等到有任务提交时才会启动，除非调用了prestartCoreThread/prestartAllCoreThreads事先启动核心线程
-  
+
 + maximumPoolSize：最大线程数，可允许创建的线程数，corePoolSize和maximumPoolSize设置的边界自动调整池大小
 
 + keepAliveTime：如果线程数多于corePoolSize,则这些多余的线程没有运行任何任务，在等待keepAliveTime时间后，这个线程将会被销毁，直到线程池的线程数量重新达到corePoolSize。
@@ -670,7 +670,7 @@ Error 和 Exception均继承自Throwable
         /** Per-thread task counter */
         volatile long completedTasks;
     }
-``` 
+```
 
 ### 5.11 重载
 
@@ -702,6 +702,11 @@ Error 和 Exception均继承自Throwable
 
 + 发送端消息的可靠投递：事务、Publisher Confirm模式
 + Exchange -> Queue：消息持久化 + 镜像队列
-+ 消费端消息的消费：ack机制+requeue或者放到死信队列中
 
-> ReturnCallBack只有在mandatory设置为true时生效
+> ReturnCallBack只有在mandatory设置为true时生效，主要用于判断exchange->queue 是否正确路由到，如果没有路由到queue中，returnCallback被调用
+
+> ConfirmCallBack用于 producer -> exchange
+	+ 在本地缓存已发送的message
+	+ 通过confirmCallback或者被确认的ack，将被确认的message从本地删除
+	+ 定时扫描本地的message，如果大于一定时间未被确认，则重发（如果发送后网络断开没有收到ack，重发消息，相比于丢消息，重发消息要好解决的多，consumer端做幂等处理）
++ 消费端消息的消费：ack机制+requeue或者放到死信队列中

@@ -39,27 +39,21 @@ public class RabbitmqProducer {
                 logger.info("cause {}", cause);
                 logger.info("correlationData {}", correlationData);
                 if (ack) {
+                    //remove local cache for send success message
                     logger.info(">>>>>> message sent success!");
                 } else {
-                    logger.info(">>>>>> message sent failed!");
+                    logger.info(">>>>>> message sent failed! id {}", correlationData.getId());
+                    //get from local cache and retry
                 }
             }
         });
 
         //exchange 错误，route_key 正确，ack = false
-        rabbitTemplate.convertAndSend(EXCHANGE + "NO", ROUTE_KEY, "test_message");
+//        rabbitTemplate.convertAndSend(EXCHANGE + "NO", ROUTE_KEY, "test_message");
         //exchange 正确，route_key 正确，ack = true
-        rabbitTemplate.convertAndSend(EXCHANGE, ROUTE_KEY, "test_message");
-        //exchange 正确，route_key 正确，ack = true
-        rabbitTemplate.convertAndSend(EXCHANGE, ROUTE_KEY + "NO", "test_message");
-//        rabbitTemplate.setMandatory(true);
-//        rabbitTemplate.setReturnCallback(new RabbitTemplate.ReturnCallback() {
-//            @Override
-//            public void returnedMessage(Message message, int replyCode, String replyText, String exchange, String routingKey) {
-//                logger.info("message route from exchange {} with routing key {}, replyCode {}, replyText {}",
-//                        exchange, routingKey, replyCode, replyText);
-//            }
-//        });
+        rabbitTemplate.convertAndSend(EXCHANGE, ROUTE_KEY, "test_message", new CorrelationData("message_id_20180831"));
+        //exchange 正确，route_key 错误，ack = true
+//        rabbitTemplate.convertAndSend(EXCHANGE, ROUTE_KEY + "NO", "test_message");
     }
 
 
@@ -88,8 +82,8 @@ public class RabbitmqProducer {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("classpath:applicationContext.xml");
         context.start();
         RabbitmqProducer rabbitmqProducer = context.getBean("rabbitmqProducer", RabbitmqProducer.class);
-        rabbitmqProducer.sendMessageWithReturnCallback();
-//        rabbitmqProducer.sendMessageWithConfirmCallback();
+//        rabbitmqProducer.sendMessageWithReturnCallback();
+        rabbitmqProducer.sendMessageWithConfirmCallback();
     }
 
 
