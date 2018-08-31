@@ -10,6 +10,8 @@
     <description>Spring公共配置</description>
     <context:component-scan base-package="org.lynn"></context:component-scan>
 
+    <context:property-placeholder ignore-unresolvable="true"/>
+
     <!--配置connection-factory，指定连接rabbit server参数 -->
     <rabbit:connection-factory id="connectionFactory"
                                host="127.0.0.1" port="5672" username="guest"
@@ -27,20 +29,18 @@
     <!--定义direct-exchange -->
     <!--fanout exchange 不处理route_key -->
     <rabbit:direct-exchange name="org.lynn.exchange"
-                            durable="true" auto-delete="false">
+                            durable="true" auto-delete="false" >
         <rabbit:bindings>
-            <rabbit:binding queue="org.lynn.queue" key="org.lynn.routeKey"></rabbit:binding>
+            <rabbit:binding queue="org.lynn.queue" key="org.lynn.routeKey" ></rabbit:binding>
         </rabbit:bindings>
     </rabbit:direct-exchange>
 
 
     <!-- 消息接收者 -->
-
-    <!--<bean id="qwerConsumer" class="com.demo.action.QwerConsumer"></bean>-->
-    <!--&lt;!&ndash; queue litener 观察 监听模式 当有消息到达时会通知监听在对应的队列上的监听对象 &ndash;&gt;-->
-    <!--<rabbit:listener-container connection-factory="connectionFactory" >-->
-    <!--<rabbit:listener  queues="mq.asdf"  ref="asdfConsumer"/>-->
-    <!--</rabbit:listener-container>-->
+    <!-- queue litener 观察 监听模式 当有消息到达时会通知监听在对应的队列上的监听对象 -->
+    <rabbit:listener-container connection-factory="connectionFactory" acknowledge="manual">
+        <rabbit:listener queues="org.lynn.queue" ref="rabbitmqConsumer" />
+    </rabbit:listener-container>
 
 
 </beans>
