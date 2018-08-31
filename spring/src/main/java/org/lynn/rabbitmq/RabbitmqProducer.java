@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.support.CorrelationData;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +21,7 @@ import static com.alibaba.fastjson.JSON.toJSONString;
  * Date : 2018/8/30 18:11
  */
 @Component
-public class RabbitmqProducer {
+public class RabbitmqProducer implements InitializingBean {
 
     private static final Logger logger = LoggerFactory.getLogger(RabbitmqProducer.class);
 
@@ -28,11 +29,9 @@ public class RabbitmqProducer {
 
     private static String ROUTE_KEY = "org.lynn.routeKey";
 
-    @Resource
-    private RabbitTemplate rabbitTemplate;
-
-    public void sendMessageWithConfirmCallback() {
-        logger.info("sendMessage .......");
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        System.out.println(rabbitTemplate == null ? true : false);
         rabbitTemplate.setConfirmCallback(new RabbitTemplate.ConfirmCallback() {
             @Override
             public void confirm(CorrelationData correlationData, boolean ack, String cause) {
@@ -48,17 +47,6 @@ public class RabbitmqProducer {
             }
         });
 
-        //exchange 错误，route_key 正确，ack = false
-//        rabbitTemplate.convertAndSend(EXCHANGE + "NO", ROUTE_KEY, "test_message");
-        //exchange 正确，route_key 正确，ack = true
-        rabbitTemplate.convertAndSend(EXCHANGE, ROUTE_KEY, "test_message", new CorrelationData("message_id_20180831"));
-        //exchange 正确，route_key 错误，ack = true
-//        rabbitTemplate.convertAndSend(EXCHANGE, ROUTE_KEY + "NO", "test_message");
-    }
-
-
-    public void sendMessageWithReturnCallback() {
-        logger.info("sendMessage .......");
         rabbitTemplate.setMandatory(true);
         rabbitTemplate.setReturnCallback(new RabbitTemplate.ReturnCallback() {
             @Override
@@ -70,6 +58,24 @@ public class RabbitmqProducer {
                 logger.info("returned message is {{}}", messageStr);
             }
         });
+    }
+
+    @Resource
+    private RabbitTemplate rabbitTemplate;
+
+    public void sendMessageWithConfirmCallback() {
+        logger.info("sendMessage .......");
+        //exchange 错误，route_key 正确，ack = false
+//        rabbitTemplate.convertAndSend(EXCHANGE + "NO", ROUTE_KEY, "test_message");
+        //exchange 正确，route_key 正确，ack = true
+        rabbitTemplate.convertAndSend(EXCHANGE, ROUTE_KEY, "test_message", new CorrelationData("message_id_20180831"));
+        //exchange 正确，route_key 错误，ack = true
+//        rabbitTemplate.convertAndSend(EXCHANGE, ROUTE_KEY + "NO", "test_message");
+    }
+
+
+    public void sendMessageWithReturnCallback() {
+        logger.info("sendMessage .......");
         //exchange 错误，route_key 正确，发送报错，无法正常发送到交换机
 //        rabbitTemplate.convertAndSend(EXCHANGE + "NO", ROUTE_KEY, "test_message");
         //exchange 正确，route_key 正确，发送正常
