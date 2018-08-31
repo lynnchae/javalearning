@@ -24,6 +24,7 @@ public class RabbitmqConsumer implements ChannelAwareMessageListener {
 
     @Override
     public void onMessage(Message message, Channel channel) throws Exception {
+        System.out.println("------>"+System.currentTimeMillis());
         String messageStr = new String(message.getBody());
         MessageProperties mp = message.getMessageProperties();
         logger.info("message properties {}", toJSONString(mp));

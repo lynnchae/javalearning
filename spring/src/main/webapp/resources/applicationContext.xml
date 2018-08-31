@@ -24,23 +24,44 @@
     <rabbit:template id="rabbitmqTemplate" connection-factory="connectionFactory"/>
 
 
+    <!--延迟交换机及队列-->
+    <rabbit:queue name="org.lynn.delay.queue" durable="true" auto-delete="false">
+    </rabbit:queue>
+
+    <rabbit:direct-exchange name="org.lynn.delay.exchange" durable="true" auto-delete="false">
+        <rabbit:bindings>
+            <rabbit:binding queue="org.lynn.delay.queue" key="org.lynn.delay.routeKey"></rabbit:binding>
+        </rabbit:bindings>
+    </rabbit:direct-exchange>
+
+    <rabbit:listener-container connection-factory="connectionFactory" acknowledge="manual">
+        <rabbit:listener queues="org.lynn.delay.queue" ref="rabbitmqConsumer"/>
+    </rabbit:listener-container>
+
     <!--定义queue  说明：durable:是否持久化 exclusive: 仅创建者可以使用的私有队列，断开后自动删除 auto_delete: 当所有消费客户端连接断开后，是否自动删除队列-->
-    <rabbit:queue name="org.lynn.queue" durable="true" auto-delete="false"/>
+    <rabbit:queue name="org.lynn.queue" durable="true" auto-delete="false">
+        <rabbit:queue-arguments>
+            <!--延迟队列，消息发送后，如果超过ttl未被消费，进入死信队列-->
+            <!--<entry key="x-message-ttl" value="10000" value-type="java.lang.Long"/>-->
+            <entry key="x-dead-letter-exchange" value="org.lynn.delay.exchange"/>
+            <entry key="x-dead-letter-routing-key" value="org.lynn.delay.routeKey"/>
+        </rabbit:queue-arguments>
+    </rabbit:queue>
     <!--定义direct-exchange -->
     <!--fanout exchange 不处理route_key -->
     <rabbit:direct-exchange name="org.lynn.exchange"
-                            durable="true" auto-delete="false" >
+                            durable="true" auto-delete="false">
         <rabbit:bindings>
-            <rabbit:binding queue="org.lynn.queue" key="org.lynn.routeKey" ></rabbit:binding>
+            <rabbit:binding queue="org.lynn.queue" key="org.lynn.routeKey"></rabbit:binding>
         </rabbit:bindings>
     </rabbit:direct-exchange>
 
 
     <!-- 消息接收者 -->
     <!-- queue litener 观察 监听模式 当有消息到达时会通知监听在对应的队列上的监听对象 -->
-    <rabbit:listener-container connection-factory="connectionFactory" acknowledge="manual">
-        <rabbit:listener queues="org.lynn.queue" ref="rabbitmqConsumer" />
-    </rabbit:listener-container>
+    <!--<rabbit:listener-container connection-factory="connectionFactory" acknowledge="manual">-->
+    <!--<rabbit:listener queues="org.lynn.queue" ref="rabbitmqConsumer" />-->
+    <!--</rabbit:listener-container>-->
 
 
 </beans>
