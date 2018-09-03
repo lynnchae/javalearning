@@ -80,7 +80,7 @@ public class RabbitmqProducer implements InitializingBean {
 //        rabbitTemplate.convertAndSend(EXCHANGE + "NO", ROUTE_KEY, "test_message");
         //exchange 正确，route_key 正确，发送正常
 //        rabbitTemplate.convertAndSend(EXCHANGE, ROUTE_KEY, "test_message");
-        //exchange 正确，route_key 正确，returnCallback被回调
+        //exchange 正确，route_key 错误，returnCallback被回调
         rabbitTemplate.convertAndSend(EXCHANGE, ROUTE_KEY + "NO", "test_message");
     }
 
