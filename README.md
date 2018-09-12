@@ -555,6 +555,13 @@ Error 和 Exception均继承自Throwable
 |key和value都不允许为null，遇到null，直接返回 NullPointerException|key和value都允许为null，遇到key为null的时候，调用putForNullKey方法进行处理，而对value没有处理|
 |hash数组默认大小是11，扩充方式是old*2+1|hash数组的默认大小是16，而且一定是2的指数|
 
++ **hash冲突**
+    + 开放定址法（线性探测再散列，二次探测再散列，伪随机探测再散列）
+    + 再哈希法
+    + 链地址法(hashmap)
+    + 公共溢出区
+    
+    
 ### 5.6 浅拷贝(ShallowClone) & 深拷贝(DeepClone)
 
 **浅拷贝**
@@ -675,6 +682,10 @@ Error 和 Exception均继承自Throwable
 ### 5.11 重载
 
 + jdk通过对方法名+形参列表作为方法签名的唯一性判断，与返回值类型无关
+
+### 5.12 hashcode
+
+> 通俗来说：Java中的hashCode方法就是根据一定的规则将与对象相关的信息（比如对象的存储地址，对象的字段等）映射成一个数值，这个数值称作为散列值。
 
 ## 6. Distribution System
 
