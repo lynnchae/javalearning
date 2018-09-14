@@ -560,8 +560,7 @@ Error 和 Exception均继承自Throwable
     + 再哈希法
     + 链地址法(hashmap)
     + 公共溢出区
-    
-    
+
 ### 5.6 浅拷贝(ShallowClone) & 深拷贝(DeepClone)
 
 **浅拷贝**
@@ -686,6 +685,28 @@ Error 和 Exception均继承自Throwable
 ### 5.12 hashcode
 
 > 通俗来说：Java中的hashCode方法就是根据一定的规则将与对象相关的信息（比如对象的存储地址，对象的字段等）映射成一个数值，这个数值称作为散列值。
+
+### 5.13 ThreadLocal
+
++ Thread有一个ThreadLocal.ThreadLocalMap **threadLocals**成员变量
+
++ 当ThreadLocal.set(V)时，以**ThreadLocalMap.Entry(ThreadLocal,V)**形式存在于thread.threadLocals对象中
+
++ Entry以线性探测法来解决hash冲突
+
+  ```java
+  public void set(T value) {
+          Thread t = Thread.currentThread();
+      	//获取当前线程t.threadLocalMap
+          ThreadLocalMap map = getMap(t);
+          if (map != null)
+              //设置 K:ThreadLocal,V:value存放在Entry<Referent,Value>数组中
+              map.set(this, value);
+          else
+              createMap(t, value);
+      }
+  ```
+
 
 ## 6. Distribution System
 
