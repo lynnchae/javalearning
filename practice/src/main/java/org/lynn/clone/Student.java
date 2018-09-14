@@ -12,7 +12,7 @@ import java.io.*;
  * Date : 2018/8/6 17:26
  */
 @Data
-public class Student implements Serializable {
+public class Student extends Human implements Serializable {
 
     private Integer age;
 
@@ -33,7 +33,8 @@ public class Student implements Serializable {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         Student sa = new Student();
         sa.setAge(20);
-        sa.setName("Tom");
+        sa.setName("tom");
+        sa.setLeg("toms leg");
         ClassMark classMark = new ClassMark();
         classMark.setClassName("数学");
         classMark.setScore(100);
@@ -45,6 +46,8 @@ public class Student implements Serializable {
         System.out.println(System.identityHashCode(sb.classMark));
         System.out.println(sa == sb);
         System.out.println(sa.classMark == sb.classMark);
+        //父类未实现序列化，对应的字段不会进行序列化
+        System.out.println(sb.toString());
     }
 
 }
